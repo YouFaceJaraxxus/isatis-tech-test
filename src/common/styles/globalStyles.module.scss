@@ -1,0 +1,23 @@
+@import './globalVariables.module.scss';
+
+@mixin primary-background {
+  background-color: $primary-color;
+}
+
+@mixin primary-text {
+  color: white;
+}
+
+@mixin layout {
+  max-width: $max-width;
+  width: 100%;
+  margin: auto;
+  background: #fff;
+  padding: 0;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}

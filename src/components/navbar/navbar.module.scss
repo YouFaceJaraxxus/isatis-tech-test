@@ -1,0 +1,11 @@
+@import '../../common/styles/globalStyles.module.scss';
+
+.navbarWrapper{
+  @include primary-background;
+  @include primary-text;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
