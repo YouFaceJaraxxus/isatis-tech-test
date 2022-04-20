@@ -9,14 +9,24 @@ import {
   softDeleteRecipeAsync,
   updateRecipeAsync
 } from '../../redux/reducers/recipesSlice';
+import { openSnackbar } from '../../redux/reducers/commonSlice';
 
 const Recipes = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
 
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
-    dispatch(getRecipesAsync());
-    dispatch(getRecipeByIdAsync(sampleRecipe))
+    dispatch(getRecipesAsync())
+    .then((response) => {
+      //successful fetch
+      if(response.payload){
+        dispatch(openSnackbar({
+          text: 'Recipes fetched!',
+          type: 'success',
+        }))
+      }
+    })
+    dispatch(getRecipeByIdAsync(sampleRecipe));
     /*dispatch(updateRecipeAsync({
       id: sampleRecipe,
       body: {
