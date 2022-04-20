@@ -11,3 +11,15 @@ export const post = (path, data, config = {}, isRawUrl = false) => {
   const dataJson = JSON.stringify(data);
   return axios.post(url, dataJson, config);
 }
+
+export const put = (path, data, config = {}, isRawUrl = false) => {
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`;
+  const dataJson = JSON.stringify(data);
+  return axios.put(url, dataJson, config);
+}
+
+export const patch = (path, data, config = {}, isRawUrl = false) => {
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`;
+  const dataJson = JSON.stringify(data);
+  return axios.patch(url, dataJson, config);
+}

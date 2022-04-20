@@ -1,13 +1,30 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createRecipeAsync, getRecipesAsync, setFetchingRecipes } from '../../redux/reducers/recipesSlice';
+import {
+  createRecipeAsync,
+  getRecipeByIdAsync,
+  getRecipesAsync,
+  setFetchingRecipes,
+  softDeleteRecipeAsync,
+  updateRecipeAsync
+} from '../../redux/reducers/recipesSlice';
 
 const Recipes = () => {
-  const { recipes, fetchingRecipes } = useSelector((state) => state.recipes);
+  const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
 
   useEffect(() => {
+    const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
     dispatch(getRecipesAsync());
+    dispatch(getRecipeByIdAsync(sampleRecipe))
+    /*dispatch(updateRecipeAsync({
+      id: sampleRecipe,
+      body: {
+        quantity: 3512.100,
+        unit: 'kg',
+      },
+    }));*/
+    //dispatch(softDeleteRecipeAsync(sampleRecipe))
     /*dispatch((createRecipeAsync({
       quantity: 245.1,
       unit: 'g'
@@ -33,7 +50,7 @@ const Recipes = () => {
           )
       }
       {
-        recipes && recipes.map((recipe) => !recipe.isDeleted && (
+        recipes && recipes.map((recipe) => (
           <div key={recipe.id}>
             <div>
               ID: {recipe.id}
@@ -49,6 +66,25 @@ const Recipes = () => {
             </div>
           </div>
         ))
+      }
+      {
+        currentRecipe && (
+          <div>
+            <h1>CURRENT RECIPE</h1>
+            <div>
+              ID: {currentRecipe.id}
+            </div>
+            <div>
+              RAW_MATERIAL_ID: {currentRecipe.rawMaterialId}
+            </div>
+            <div>
+              QUANTITY: {currentRecipe.quantity}
+            </div>
+            <div>
+              UNIT: {currentRecipe.unit}
+            </div>
+          </div>
+        )
       }
     </div>
   )
