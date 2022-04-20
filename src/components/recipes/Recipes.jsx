@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from '../../services/common/baseService';
-import { setFetchingRecipes } from '../../redux/reducers/recipesSlice';
+import { getRecipesAsync, setFetchingRecipes } from '../../redux/reducers/recipesSlice';
 
 const Recipes = () => {
   const { recipes, fetchingRecipes } = useSelector((state) => state.recipes);
 
   useEffect(() => {
-    get('users').then((response) => console.log('response.data', response.data));
+    dispatch(getRecipesAsync());
   }, [])
   const dispatch = useDispatch();
   const toggleFetchingRecipes = () => {
@@ -28,6 +28,15 @@ const Recipes = () => {
           (
             <div>NOT FETCHING RECIPES</div>
           )
+      }
+      {
+        recipes && recipes.map((recipe) => (
+          <div>
+            <div>
+              {recipe.unit}
+            </div>
+          </div>
+        ))
       }
     </div>
   )
