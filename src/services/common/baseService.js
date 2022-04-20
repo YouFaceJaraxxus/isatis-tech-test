@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { API_BASE_URL, API_POSTFIX } from '../../common/config/config';
 
-export const get = (path, options = {}, isRawUrl = false) => {
-  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`
-  return axios.get(url, options);
+export const get = (path, config = {}, isRawUrl = false) => {
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`;
+  return axios.get(url, config);
+}
+
+export const post = (path, data, config = {}, isRawUrl = false) => {
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`;
+  const dataJson = JSON.stringify(data);
+  return axios.post(url, dataJson, config);
 }

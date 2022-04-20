@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { get } from '../../services/common/baseService';
-import { getRecipesAsync, setFetchingRecipes } from '../../redux/reducers/recipesSlice';
+import { createRecipeAsync, getRecipesAsync, setFetchingRecipes } from '../../redux/reducers/recipesSlice';
 
 const Recipes = () => {
   const { recipes, fetchingRecipes } = useSelector((state) => state.recipes);
 
   useEffect(() => {
     dispatch(getRecipesAsync());
+    /*dispatch((createRecipeAsync({
+      quantity: 245.1,
+      unit: 'g'
+    })))*/
   }, [])
   const dispatch = useDispatch();
   const toggleFetchingRecipes = () => {
@@ -30,10 +33,19 @@ const Recipes = () => {
           )
       }
       {
-        recipes && recipes.map((recipe) => (
-          <div>
+        recipes && recipes.map((recipe) => !recipe.isDeleted && (
+          <div key={recipe.id}>
             <div>
-              {recipe.unit}
+              ID: {recipe.id}
+            </div>
+            <div>
+              RAW_MATERIAL_ID: {recipe.rawMaterialId}
+            </div>
+            <div>
+              QUANTITY: {recipe.quantity}
+            </div>
+            <div>
+              UNIT: {recipe.unit}
             </div>
           </div>
         ))
