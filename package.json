@@ -7,7 +7,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.26.1",
     "classnames": "^2.3.1",
+    "dotenv": "^16.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.5",
@@ -16,6 +18,9 @@
     "react-scripts": "3.4.3",
     "sass": "^1.35.1",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "dev": "react-scripts start",
