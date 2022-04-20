@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../../common/config/config';
+import { API_BASE_URL, API_POSTFIX } from '../../common/config/config';
 
 export const get = (path, options = {}, isRawUrl = false) => {
-  console.log('getting');
-  const url = `${isRawUrl? '' : API_BASE_URL}${path}`
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`
   return axios.get(url, options);
 }

@@ -5,7 +5,7 @@ const Default = () => {
   return(
     <div>
       Hi I'm Default!;
-      <Link to='/posts'>Posts!</Link>
+      <Link to='/recipes'>Recipes!</Link>
     </div>
   )
 }
