@@ -9,3 +9,20 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+@mixin navbarGroup{
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbarLeft{
+  @include navbarGroup;
+  margin: auto auto auto 0;
+}
+.navbarRight{
+  @include navbarGroup;
+  margin: auto 0 auto auto;
+}

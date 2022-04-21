@@ -6,13 +6,20 @@ import NavbarItem from './navbarItem/NavbarItem';
 
 const Navbar = () => {
   const cx = classNames.bind(navbarClasses);
-  return(
+  return (
     <div className={cx({
       navbarWrapper: true,
     })}>
       <NavbarLogo />
-      <NavbarItem route={'/recipes'} text={'Recipes'} />
-      <NavbarItem route={'/products'} text={'Products'} />
+      <div className={navbarClasses.navbarLeft}>
+        <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft/>
+        <NavbarItem route={'/products'} text={'Products'} marginLeft/>
+      </div>
+      <div className={navbarClasses.navbarRight}>
+        <NavbarItem text={'Theme'} marginRight/>
+        <NavbarItem text={'Logout'} marginRight/>
+      </div>
+
     </div>
   )
 }
