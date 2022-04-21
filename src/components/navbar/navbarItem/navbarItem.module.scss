@@ -1,15 +1,28 @@
+$navbar-item-margin: 10px;
+
 .navbarItemWrapper{
   height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover{
+    opacity: 0.8;
+  }
 }
 
 .marginLeft{
-  margin-left: 10px;
+  margin-left: $navbar-item-margin;
 }
 
 .marginRight{
-  margin-right: 10px;
+  margin-right: $navbar-item-margin;
+}
+
+.marginTop{
+  margin-top: $navbar-item-margin;
+}
+
+.marginBottom{
+  margin-bottom: $navbar-item-margin;
 }

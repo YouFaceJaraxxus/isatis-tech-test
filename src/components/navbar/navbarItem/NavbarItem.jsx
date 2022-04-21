@@ -3,12 +3,19 @@ import classNames from 'classnames/bind';
 import classes from './navbarItem.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const NavbarItem = ({ route, text, marginLeft = false, marginRight = false }) => {
+const NavbarItem = ({
+  route,
+  text,
+  marginLeft = false,
+  marginRight = false,
+  marginTop = false,
+  marginBottom = false
+}) => {
   const cx = classNames.bind(classes);
   const history = useHistory();
 
   const handleClick = () => {
-    if(route){
+    if (route) {
       history.push(route);
     }
   }
@@ -17,7 +24,9 @@ const NavbarItem = ({ route, text, marginLeft = false, marginRight = false }) =>
     <div className={cx({
       navbarItemWrapper: true,
       marginLeft: marginLeft,
-      marginRight: marginRight
+      marginRight: marginRight,
+      marginTop: marginTop,
+      marginBottom: marginBottom
     })} onClick={handleClick}>
       <div>{text}</div>
     </div>

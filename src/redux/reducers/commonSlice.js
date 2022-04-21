@@ -6,6 +6,7 @@ export const commonSlice = createSlice({
     showSnackbar: false,
     snackbarText: '',
     snackbarType: '',
+    navbarDropdownOpen: false,
   },
   reducers: {
     openSnackbar: (state, action) => {
@@ -17,13 +18,17 @@ export const commonSlice = createSlice({
       state.showSnackbar = false;
       state.snackbarText = '';
       state.snackbarType = '';
+    },
+    setNavbarDropdownOpen: (state, action) => {
+      state.navbarDropdownOpen = action.payload;
     }
   },
 });
 
 export const {
   openSnackbar,
-  closeSnackbar
+  closeSnackbar,
+  setNavbarDropdownOpen
 } = commonSlice.actions;
 
 export default commonSlice.reducer;

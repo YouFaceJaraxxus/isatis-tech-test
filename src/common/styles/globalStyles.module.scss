@@ -4,6 +4,10 @@
   background-color: $primary-color;
 }
 
+@mixin primary-background-lighter {
+  background-color: $primary-color-lighter;
+}
+
 @mixin primary-text {
   color: white;
 }
