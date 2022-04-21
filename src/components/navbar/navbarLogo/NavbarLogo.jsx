@@ -8,7 +8,7 @@ const NavbarLogo = () => {
   const history = useHistory();
 
   const navigateToHome = () => {
-    history.push('/main')
+    history.push('/home')
   }
 
   return (

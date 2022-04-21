@@ -11,7 +11,7 @@ import {
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 
-const Recipes = () => {
+const Products = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Recipes = () => {
   }
   return (
     <div>
-      Hi I'm Recipes!;
+      Hi I'm Products!;
       <button onClick={toggleFetchingRecipes}>TOGGLE FETCHING</button>
       {
         fetchingRecipes ?
@@ -99,4 +99,4 @@ const Recipes = () => {
   )
 }
 
-export default Recipes;
+export default Products;
