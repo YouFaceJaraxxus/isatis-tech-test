@@ -11,15 +11,16 @@ const Navbar = () => {
       navbarWrapper: true,
     })}>
       <NavbarLogo />
-      <div className={navbarClasses.navbarLeft}>
-        <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft/>
-        <NavbarItem route={'/products'} text={'Products'} marginLeft/>
+      <div className={navbarClasses.navbarItems}>
+        <div className={navbarClasses.navbarLeft}>
+          <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft />
+          <NavbarItem route={'/products'} text={'Products'} marginLeft />
+        </div>
+        <div className={navbarClasses.navbarRight}>
+          <NavbarItem text={'Theme'} marginRight />
+          <NavbarItem text={'Logout'} marginRight />
+        </div>
       </div>
-      <div className={navbarClasses.navbarRight}>
-        <NavbarItem text={'Theme'} marginRight/>
-        <NavbarItem text={'Logout'} marginRight/>
-      </div>
-
     </div>
   )
 }

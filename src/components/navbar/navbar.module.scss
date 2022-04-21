@@ -1,28 +1,41 @@
 @import '../../common/styles/globalStyles.module.scss';
 
-.navbarWrapper{
+.navbarWrapper {
   @include primary-background;
   @include primary-text;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
 
-@mixin navbarGroup{
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
+  @mixin navbar-container {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
 
-.navbarLeft{
-  @include navbarGroup;
-  margin: auto auto auto 0;
-}
-.navbarRight{
-  @include navbarGroup;
-  margin: auto 0 auto auto;
+  @include navbar-container;
+
+  .navbarItems {
+    @include navbar-container;
+    margin: auto 0 auto 0;
+    flex: 1;
+    @include tablet-small {
+      display: none;
+    }
+  }
+
+  @mixin navbarGroup {
+    @include navbar-container;
+  }
+
+  .navbarLeft {
+    @include navbarGroup;
+    margin: auto auto auto 0;
+  }
+
+  .navbarRight {
+    @include navbarGroup;
+    margin: auto 0 auto auto;
+  }
+
+  
 }
