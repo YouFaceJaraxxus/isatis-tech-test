@@ -1,0 +1,52 @@
+@import '../../../common/styles/globalStyles.module.scss';
+$navbar-dropdown-margin: 10px;
+
+.navbarDropdownWrapper{
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .marginLeft{
+    margin-left: $navbar-dropdown-margin;
+  }
+  
+  .marginRight{
+    margin-right: $navbar-dropdown-margin;
+  }
+  
+  .marginTop{
+    margin-top: $navbar-dropdown-margin;
+  }
+  
+  .marginBottom{
+    margin-bottom: $navbar-dropdown-margin;
+  }
+  
+  .textChevron{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    cursor: pointer;
+    &:hover{
+      opacity: 0.8;
+    }
+  }
+  
+  .chevron{
+    font-size: 0.8em;
+    margin: auto 0 auto 2px;
+  }
+
+  .dropdownMenuWrapper{
+    position: absolute;
+    top: 40px;
+    
+    @include primary-background-lighter;
+    @include primary-text;
+  }
+}
+
+
+

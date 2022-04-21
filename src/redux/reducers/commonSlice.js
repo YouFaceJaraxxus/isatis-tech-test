@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { LIGHT_THEME } from '../../common/config/config';
 
 export const commonSlice = createSlice({
   name: 'common',
@@ -7,6 +8,7 @@ export const commonSlice = createSlice({
     snackbarText: '',
     snackbarType: '',
     navbarDropdownOpen: false,
+    theme: LIGHT_THEME,
   },
   reducers: {
     openSnackbar: (state, action) => {
@@ -21,6 +23,9 @@ export const commonSlice = createSlice({
     },
     setNavbarDropdownOpen: (state, action) => {
       state.navbarDropdownOpen = action.payload;
+    },
+    setTheme: (state, action) => {
+      state.theme = action.payload;
     }
   },
 });
@@ -28,7 +33,8 @@ export const commonSlice = createSlice({
 export const {
   openSnackbar,
   closeSnackbar,
-  setNavbarDropdownOpen
+  setNavbarDropdownOpen,
+  setTheme,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;
