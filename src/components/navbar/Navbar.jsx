@@ -24,6 +24,7 @@ const Navbar = () => {
         dispatch(setTheme(LIGHT_THEME));
       },
       text: 'Light',
+      closeDropdown: true,
     },
     {
       id:2,
@@ -31,6 +32,7 @@ const Navbar = () => {
         dispatch(setTheme(DARK_THEME));
       },
       text: 'Dark',
+      closeDropdown: true,
     }
   ]
 

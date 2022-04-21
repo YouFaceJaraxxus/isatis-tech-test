@@ -2,7 +2,7 @@
 
 .navbarWrapper {
   @include primary-background;
-  @include primary-text;
+  @include white-text;
 
   @mixin navbar-container {
     height: 40px;

@@ -37,7 +37,18 @@ const NavbarDropdown = ({
       {
         dropdownOpen && (
           <div className={navbarDropdownClasses.dropdownMenuWrapper}>
-            
+            {
+              options.map((option) => (
+                <div className={navbarDropdownClasses.dropdownItem} key={option.id} onClick={() => { 
+                  option.action();
+                  if(option.closeDropdown){
+                    setDropdownOpen(false);
+                  }
+                 }}>
+                  {option.text}
+                </div>
+              ))
+            }
           </div>
         )
       }

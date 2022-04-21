@@ -6,24 +6,9 @@ $navbar-dropdown-margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  .marginLeft{
-    margin-left: $navbar-dropdown-margin;
-  }
-  
-  .marginRight{
-    margin-right: $navbar-dropdown-margin;
-  }
-  
-  .marginTop{
-    margin-top: $navbar-dropdown-margin;
-  }
-  
-  .marginBottom{
-    margin-bottom: $navbar-dropdown-margin;
-  }
-  
+  position: relative;
+
   .textChevron{
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,11 +26,51 @@ $navbar-dropdown-margin: 10px;
 
   .dropdownMenuWrapper{
     position: absolute;
-    top: 40px;
+    top: 35px;
+    min-width: 150px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 1px #888888;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     
-    @include primary-background-lighter;
+    @include primary-background-dropdown;
     @include primary-text;
+
+    @include tablet-small{
+      top: 25px;
+    }
   }
+
+  .dropdownItem{
+    text-align: left;
+    width: 100%;
+    height: 20px;
+    margin: 5px auto;
+    cursor: pointer;
+    &:hover{
+      opacity: 0.8;
+    }
+  }
+}
+
+.marginLeft{
+  margin-left: $navbar-dropdown-margin;
+}
+
+.marginRight{
+  margin-right: $navbar-dropdown-margin;
+}
+
+.marginTop{
+  margin-top: $navbar-dropdown-margin;
+}
+
+.marginBottom{
+  margin-bottom: $navbar-dropdown-margin;
 }
 
 

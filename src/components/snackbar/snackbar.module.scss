@@ -2,7 +2,7 @@
 
 .snackbarWrapper{
   @include primary-background;
-  @include primary-text;
+  @include white-text;
   position: fixed;
   bottom: 10px;
   right: 10px;

@@ -8,7 +8,15 @@
   background-color: $primary-color-lighter;
 }
 
+@mixin primary-background-dropdown {
+  background-color: white;
+}
+
 @mixin primary-text {
+  color: $primary-color;
+}
+
+@mixin white-text {
   color: white;
 }
 
