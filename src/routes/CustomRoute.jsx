@@ -7,12 +7,13 @@ import Login from '../components/login/Login';
 import Recipes from '../components/recipes/Recipes';
 
 
-const CustomRoute = ({ path, exact, component: RouteComponent }) => {
+const CustomRoute = ({ path, exact, component: RouteComponent, isGuarded = true }) => {
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, checkedIsLoggedIn } = useSelector((state) => state.auth);
 
   const renderComponent = () => {
-    if(!isLoggedIn && path !== '/' && path !== '/login'){
+    if(!checkedIsLoggedIn || !isGuarded) return <Home />
+    if(!isLoggedIn && path !== '/home' && path !== '/login'){
       return <Login />
     }else if(isLoggedIn && path === '/login'){
       return <Recipes />

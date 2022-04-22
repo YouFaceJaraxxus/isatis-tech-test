@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import classes from './navbarItem.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { setLoggedIn } from '../../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
 const NavbarItem = ({
@@ -12,6 +11,7 @@ const NavbarItem = ({
   marginRight = false,
   marginTop = false,
   marginBottom = false,
+  additionalAction,
 }) => {
   const cx = classNames.bind(classes);
   const history = useHistory();
@@ -19,12 +19,11 @@ const NavbarItem = ({
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    if (text === 'Logout'){
-      dispatch(setLoggedIn(false));
-      history.push('/');
-    }
-    else if (route) {
+    if (route) {
       history.push(route);
+    }
+    if(additionalAction){
+      additionalAction();
     }
   }
 

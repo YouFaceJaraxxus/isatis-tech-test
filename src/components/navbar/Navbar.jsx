@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNavbarDropdownOpen, setTheme } from '../../redux/reducers/commonSlice';
 import NavbarDropdown from './navbarDropdown/NavbarDropdown';
 import { LIGHT_THEME, DARK_THEME } from '../../common/config/config';
+import { setLoggedIn } from '../../redux/reducers/authSlice';
 
 const Navbar = () => {
   const cx = classNames.bind(navbarClasses);
@@ -16,6 +17,10 @@ const Navbar = () => {
 
   const handleBurgerClick = () => {
     dispatch(setNavbarDropdownOpen(!navbarDropdownOpen));
+  }
+
+  const logout = () => {
+    dispatch(setLoggedIn(false));
   }
 
   const navbarDropdownOptions = [
@@ -49,7 +54,7 @@ const Navbar = () => {
         </div>
         <div className={navbarClasses.navbarRight}>
           <NavbarDropdown text={'Theme'} marginRight options={navbarDropdownOptions}/>
-          { isLoggedIn && <NavbarItem text={'Logout'} marginRight route={'/'} /> }
+          { isLoggedIn && <NavbarItem text={'Logout'} marginRight route={'/login'} additionalAction={logout}/> }
           { !isLoggedIn && <NavbarItem text={'Login'} marginRight route={'/login'}/> }
         </div>
       </div>
@@ -70,7 +75,7 @@ const Navbar = () => {
         <NavbarItem route={'/recipes'} text={'Recipes'} marginTop />
         <NavbarItem route={'/products'} text={'Products'} marginTop />
         <NavbarDropdown text={'Theme'} marginTop options={navbarDropdownOptions}/>
-        { isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/'} /> }
+        { isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/login'} additionalAction={logout}/> }
         { !isLoggedIn && <NavbarItem text={'Login'} marginTop marginBottom route={'/login'}/> }
       </div>
     </div>

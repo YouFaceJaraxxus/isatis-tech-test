@@ -2,16 +2,18 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { 
+const {
   REACT_APP_API_BASE_URL: API_BASE_URL,
   REACT_APP_API_POSTFIX: API_POSTFIX,
   REACT_APP_LIGHT_THEME: LIGHT_THEME,
   REACT_APP_DARK_THEME: DARK_THEME,
- } = process.env;
+  REACT_APP_USER_LOCAL_STORAGE_KEY: USER_LOCAL_STORAGE_KEY,
+} = process.env;
 
 export {
   API_BASE_URL,
   API_POSTFIX,
   LIGHT_THEME,
-  DARK_THEME
+  DARK_THEME,
+  USER_LOCAL_STORAGE_KEY
 };

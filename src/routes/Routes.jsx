@@ -13,8 +13,8 @@ const Routes = () => {
         <CustomRoute path="/recipes" exact component={Recipes}></CustomRoute>
         <CustomRoute path="/products" exact component={Products}></CustomRoute>
         <CustomRoute path="/login" exact component={Login}></CustomRoute>
-        <CustomRoute path="/" exact component={Home}></CustomRoute>
-        <CustomRoute path="*" exact component={Home}></CustomRoute>
+        <CustomRoute path="/home" exact component={Home} isGuarded={false}></CustomRoute>
+        <CustomRoute path="*" exact component={Home} isGuarded={false}></CustomRoute>
       </Switch>
     </Router>
   )
