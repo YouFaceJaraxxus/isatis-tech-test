@@ -1,0 +1,36 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.loginWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10% auto auto auto;
+  height: 100%;
+
+  h3 {
+    width: 20vw;
+  }
+
+  form {
+    text-align: center;
+  }
+}
+
+.loginInput {
+  display: flex;
+  width: 25vw;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.submitButton {
+  width: 15vw;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+}
