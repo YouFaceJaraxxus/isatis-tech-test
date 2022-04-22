@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import classes from './navbarItem.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useDispatch } from 'react-redux';
 
 const NavbarItem = ({
   route,
@@ -16,13 +15,11 @@ const NavbarItem = ({
   const cx = classNames.bind(classes);
   const history = useHistory();
 
-  const dispatch = useDispatch();
-
   const handleClick = () => {
     if (route) {
       history.push(route);
     }
-    if(additionalAction){
+    if (additionalAction) {
       additionalAction();
     }
   }

@@ -11,7 +11,6 @@ export const authSlice = createSlice({
   },
   reducers: {
     setLoggedIn: (state, action) => {
-      console.log('paylo', action.payload);
       state.isLoggedIn = action.payload;
       state.checkedIsLoggedIn = true;
       const userLocalStorageObject = {

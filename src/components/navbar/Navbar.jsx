@@ -49,8 +49,8 @@ const Navbar = () => {
       <NavbarLogo />
       <div className={navbarClasses.navbarItems}>
         <div className={navbarClasses.navbarLeft}>
-          <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft />
-          <NavbarItem route={'/products'} text={'Products'} marginLeft />
+          {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft /> }
+          {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginLeft /> }
         </div>
         <div className={navbarClasses.navbarRight}>
           <NavbarDropdown text={'Theme'} marginRight options={navbarDropdownOptions}/>
@@ -72,8 +72,8 @@ const Navbar = () => {
         navbarItemsMobile: true,
         hideDropdown: !navbarDropdownOpen,
       })}>
-        <NavbarItem route={'/recipes'} text={'Recipes'} marginTop />
-        <NavbarItem route={'/products'} text={'Products'} marginTop />
+        {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginTop /> }
+        {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginTop /> }
         <NavbarDropdown text={'Theme'} marginTop options={navbarDropdownOptions}/>
         { isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/login'} additionalAction={logout}/> }
         { !isLoggedIn && <NavbarItem text={'Login'} marginTop marginBottom route={'/login'}/> }
