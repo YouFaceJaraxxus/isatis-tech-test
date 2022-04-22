@@ -3,9 +3,13 @@ import { useSelector, useDispatch} from 'react-redux';
 import loginClasses from './login.module.scss';
 import {useHistory} from 'react-router-dom'
 import { openSnackbar } from '../../redux/reducers/commonSlice';
+import { setLoggedIn } from '../../redux/reducers/authSlice';
 
 const Login = () => {
   const { theme } = useSelector((state) => state.common);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  console.log(theme);
   
   const dispatch = useDispatch();
 
@@ -27,6 +31,7 @@ const Login = () => {
 
     if (emailValid && passwordValid ) {
       history.push('/recipes')
+      dispatch(setLoggedIn(true));
     } else {
       dispatch(openSnackbar({
         text: 'Incorrect mail or password!',

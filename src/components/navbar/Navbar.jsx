@@ -11,6 +11,7 @@ import { LIGHT_THEME, DARK_THEME } from '../../common/config/config';
 const Navbar = () => {
   const cx = classNames.bind(navbarClasses);
   const { navbarDropdownOpen } = useSelector((state) => state.common);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleBurgerClick = () => {
@@ -48,7 +49,8 @@ const Navbar = () => {
         </div>
         <div className={navbarClasses.navbarRight}>
           <NavbarDropdown text={'Theme'} marginRight options={navbarDropdownOptions}/>
-          <NavbarItem text={'Logout'} marginRight />
+          { isLoggedIn && <NavbarItem text={'Logout'} marginRight route={'/'} /> }
+          { !isLoggedIn && <NavbarItem text={'Login'} marginRight route={'/login'}/> }
         </div>
       </div>
 
@@ -68,7 +70,8 @@ const Navbar = () => {
         <NavbarItem route={'/recipes'} text={'Recipes'} marginTop />
         <NavbarItem route={'/products'} text={'Products'} marginTop />
         <NavbarDropdown text={'Theme'} marginTop options={navbarDropdownOptions}/>
-        <NavbarItem text={'Logout'} marginTop marginBottom />
+        { isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/'} /> }
+        { !isLoggedIn && <NavbarItem text={'Login'} marginTop marginBottom route={'/login'}/> }
       </div>
     </div>
   )
