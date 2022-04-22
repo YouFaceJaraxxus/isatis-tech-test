@@ -19,7 +19,6 @@ const NavbarItem = ({
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    console.log(text);
     if (text === 'Logout'){
       dispatch(setLoggedIn(false));
       history.push('/');

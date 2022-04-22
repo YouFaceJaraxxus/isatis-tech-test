@@ -8,8 +8,6 @@ import { setLoggedIn } from '../../redux/reducers/authSlice';
 const Login = () => {
   const { theme } = useSelector((state) => state.common);
   const { isLoggedIn } = useSelector((state) => state.auth);
-
-  console.log(theme);
   
   const dispatch = useDispatch();
 

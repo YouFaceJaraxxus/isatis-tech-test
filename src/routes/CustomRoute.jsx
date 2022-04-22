@@ -20,7 +20,6 @@ const CustomRoute = ({ path, exact, component: RouteComponent }) => {
             </Layout>
           );
         } else if (isLoggedIn && path === '/login') {
-          console.log('aaaaaaaaaaaaaaaa');
           return (
             <Layout>
               <Home />
