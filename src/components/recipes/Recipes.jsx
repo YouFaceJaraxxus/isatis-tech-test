@@ -1,21 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createRecipeAsync,
-  getRecipeByIdAsync,
-  getRecipesAsync,
-  setFetchingRecipes,
-  softDeleteRecipeAsync,
-  updateRecipeAsync
+  getRecipesAsync, softDeleteRecipeAsync, updateRecipeAsync,
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { SUCCESS } from '../../common/config/config';
 import recipesClasses from './recipes.module.scss';
 import classNames from 'classnames/bind';
+import Table from '../table/Table';
+import { useForm } from 'react-hook-form';
+import Modal from 'react-modal/lib/components/Modal';
+import { updateProductAsync } from '../../redux/reducers/productsSlice';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: '10px solid'
+  },
+};
+
 
 const Recipes = () => {
-  const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
+  const { recipes } = useSelector((state) => state.recipes);
   const cx = classNames.bind(recipesClasses);
+
+  const {register, handleSubmit, setValue, reset} = useForm();
+
+  const [recipeToUpdate, setRecipeToUpdate] = useState(null);
+  const [isOpenModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
@@ -29,66 +47,83 @@ const Recipes = () => {
         }))
       }
     })
-    dispatch(getRecipeByIdAsync(sampleRecipe));
-    /*dispatch(updateRecipeAsync({
-      id: sampleRecipe,
-      body: {
-        quantity: 3512.100,
-        unit: 'kg',
-      },
-    }));*/
-    //dispatch(softDeleteRecipeAsync(sampleRecipe))
-    /*dispatch((createRecipeAsync({
-      quantity: 245.1,
-      unit: 'g'
-    })))*/
   }, [])
   const dispatch = useDispatch();
-  const toggleFetchingRecipes = () => {
-    dispatch(setFetchingRecipes(!fetchingRecipes));
+
+  const showCreateRecipeModal = () => {
+    setOpenModal(true);
   }
+
+  const closeCreateRecipeModal = () => {
+    setOpenModal(false);
+  }
+
+
+  const updateRecipe = (recipe) => {
+    Object.keys(recipe).forEach(key => key !== 'id' && key !== 'rawMaterialId' && setValue(key, recipe[key]));
+    setRecipeToUpdate(recipe);
+    showCreateRecipeModal();
+  }
+
+  const deleteRecipe = (recipeId) => {
+    dispatch(softDeleteRecipeAsync(recipeId));
+  }
+
+  const handleFormSubmit = (data) => {
+    if (recipeToUpdate) {
+      dispatch(updateRecipeAsync({
+        id: recipeToUpdate.id,
+        body: {
+          ...data,
+        }
+      }));
+    } else {
+      dispatch(createRecipeAsync(data));
+    }
+    setRecipeToUpdate(null);
+    reset();
+    closeCreateRecipeModal();  
+  }
+
   return (
     <div className={recipesClasses.recipesWrapper}>
       <div className={recipesClasses.recipesTitle}>
-        Recipes
+        All recipes:
       </div>
-      {
-        recipes && recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <div>
-              ID: {recipe.id}
-            </div>
-            <div>
-              RAW_MATERIAL_ID: {recipe.rawMaterialId}
-            </div>
-            <div>
-              QUANTITY: {recipe.quantity}
-            </div>
-            <div>
-              UNIT: {recipe.unit}
-            </div>
-          </div>
-        ))
-      }
-      {
-        currentRecipe && (
-          <div>
-            <h1>CURRENT RECIPE</h1>
-            <div>
-              ID: {currentRecipe.id}
-            </div>
-            <div>
-              RAW_MATERIAL_ID: {currentRecipe.rawMaterialId}
-            </div>
-            <div>
-              QUANTITY: {currentRecipe.quantity}
-            </div>
-            <div>
-              UNIT: {currentRecipe.unit}
-            </div>
-          </div>
-        )
-      }
+      <Modal
+        isOpen={isOpenModal}
+        onRequestClose={closeCreateRecipeModal}
+        style={customStyles}
+      >
+        {!recipeToUpdate && <h4>Create Product</h4>}
+        {recipeToUpdate && <h4>Update Product</h4>}
+        <form className={recipesClasses.createRecipeForm} onSubmit={handleSubmit(handleFormSubmit)}>
+          <input type='text' placeholder='Name' name='name' {...register('name')} ></input>
+          <input type='text' placeholder='Quantity' name='quantity' {...register('quantity')} ></input>
+          <select name='unit' {...register('unit')}>
+            <option>g</option>
+            <option>kg</option>
+            <option>mg</option>
+            <option>l</option>
+            <option>ml</option>
+            <option>dl</option>
+          </select>
+          <input type='submit' value={recipeToUpdate ? 'Update' : 'Create'}></input>
+        </form>
+      </Modal>
+        <Table data={recipes} headers={{
+          id: 'ID',
+          rawMaterialId: 'Raw Material ID',
+          name: 'Name',
+          quantity: 'Quantity',
+          unit: 'Unit'
+        }} handleUpdate={updateRecipe} handleDelete={deleteRecipe}/>
+      
+      <button className={recipesClasses.createButton} onClick={() => {
+          setRecipeToUpdate(null);
+          reset();
+          showCreateRecipeModal();
+          }}>Create Recipe</button>
     </div>
   )
 }

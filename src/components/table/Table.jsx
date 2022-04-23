@@ -24,7 +24,7 @@ const Table = (props) => {
         <td>
           <button className={tableClasses.buttonEdit} onClick={() => props.handleUpdate(data)}>Update</button></td>
         <td>
-          <button className={tableClasses.buttonDelete} onClick={() => props.handleDelete(data.ID)}>Delete</button>
+          <button className={tableClasses.buttonDelete} onClick={() => props.handleDelete(data.id)}>Delete</button>
         </td>
       </tr>
     })

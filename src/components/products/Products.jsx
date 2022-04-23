@@ -29,8 +29,9 @@ const Products = () => {
 
   const [productToUpdate, setProductToUpdate] = useState(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
     dispatch(getProductsAsync())
     .then((response) => {
       //successful fetch
@@ -41,25 +42,7 @@ const Products = () => {
         }))
       }
     })
-    // dispatch(getRecipeByIdAsync(sampleRecipe));
-    /*dispatch(updateRecipeAsync({
-      id: sampleRecipe,
-      body: {
-        quantity: 3512.100,
-        unit: 'kg',
-      },
-    }));*/
-    //dispatch(softDeleteRecipeAsync(sampleRecipe))
-    // dispatch((createProductAsync({
-    //   name: 'nesto',
-    //   price: 19.99,
-    //   margin: 10,
-    //   image: null,
-    //   recipeId: '-N07b1ZAnPJVFDZMmcpF',
-    //   active: true
-    // })));
-  }, [])
-  const dispatch = useDispatch();
+  }, []);
 
   const showCreateProductModal = () => {
     setOpenModal(true);
