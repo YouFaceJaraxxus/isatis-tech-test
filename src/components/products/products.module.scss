@@ -1,0 +1,22 @@
+
+.productsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 20px;
+}
+
+.createButton {
+  margin-top: 20px;
+  width: 20%;
+  align-self: flex-end;
+  height: 40px;
+  border-radius: 10px;
+
+  background-color: rgba($color: #4e9253, $alpha: 1.0);
+
+  &:hover {
+    background-color: rgba($color: #317b36, $alpha: 1.0);
+  }
+}
+

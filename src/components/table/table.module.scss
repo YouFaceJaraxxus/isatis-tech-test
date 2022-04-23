@@ -2,7 +2,29 @@ table th, td{
   border: 1px solid;
 }
 
-table {
-  width: 80%;
+.table {
   border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+  display: flexbox;
+  overflow-x: scroll;
+}
+
+.buttonEdit {
+  height: 25px;
+  border-radius: 5px;
+  background-color: rgba($color: #7a7cf0, $alpha: 1.0);
+
+  &:hover {
+    background-color: rgba($color: #6062d5, $alpha: 1.0);
+  }
+}
+
+.buttonDelete {
+  height: 25px;
+  border-radius: 5px;
+  background-color: rgba($color: #ed6040, $alpha: 1.0);
+  &:hover {
+    background-color: rgba($color: #ca4426, $alpha: 1.0);
+  }
 }

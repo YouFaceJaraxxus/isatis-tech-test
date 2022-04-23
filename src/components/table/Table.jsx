@@ -18,7 +18,7 @@ const Table = (props) => {
 
   const tableRows = () => {
     return tableData.map(data => {
-      return <tr key={data.id}>{ columns.map(column => <td>{data[column]}</td>)}<td><button>Edit</button></td><td><button>Delete</button></td></tr>
+      return <tr key={data.id}>{ columns.map(column => <td>{data[column]}</td>)}<td><button className={tableClasses.buttonEdit}>Edit</button></td><td><button className={tableClasses.buttonDelete}>Delete</button></td></tr>
     })
   }
 

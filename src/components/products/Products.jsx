@@ -12,6 +12,7 @@ import {
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { SUCCESS } from '../../common/config/config';
 import Table from '../table/Table';
+import productsClasses from './products.module.scss'
 
 const Products = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
@@ -46,58 +47,21 @@ const Products = () => {
   const toggleFetchingRecipes = () => {
     dispatch(setFetchingRecipes(!fetchingRecipes));
   }
+
+  console.log(recipes);
   return (
-    <div>
-      Hi I'm Products!;
-      <Table data={recipes}></Table>
-      <button onClick={toggleFetchingRecipes}>TOGGLE FETCHING</button>
-      {
-        fetchingRecipes ?
-          (
-            <div>FETCHING RECIPES</div>
-          )
-          :
-          (
-            <div>NOT FETCHING RECIPES</div>
-          )
-      }
-      {
-        recipes && recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <div>
-              ID: {recipe.id}
-            </div>
-            <div>
-              RAW_MATERIAL_ID: {recipe.rawMaterialId}
-            </div>
-            <div>
-              QUANTITY: {recipe.quantity}
-            </div>
-            <div>
-              UNIT: {recipe.unit}
-            </div>
-          </div>
-        ))
-      }
-      {
-        currentRecipe && (
-          <div>
-            <h1>CURRENT RECIPE</h1>
-            <div>
-              ID: {currentRecipe.id}
-            </div>
-            <div>
-              RAW_MATERIAL_ID: {currentRecipe.rawMaterialId}
-            </div>
-            <div>
-              QUANTITY: {currentRecipe.quantity}
-            </div>
-            <div>
-              UNIT: {currentRecipe.unit}
-            </div>
-          </div>
-        )
-      }
+    <div className={productsClasses.productsWrapper}>
+      <h3>All Products:</h3>
+      <Table data={recipes.map(recipe => {
+        return {
+            'ID':recipe.id, 
+            'Material ID': recipe.rawMaterialId,
+            'Name': recipe.name,
+            'Quantity': recipe.quantity,
+            'Unit': recipe.unit
+          };
+        })}></Table>
+        <button className={productsClasses.createButton}>Create Product</button>
     </div>
   )
 }
