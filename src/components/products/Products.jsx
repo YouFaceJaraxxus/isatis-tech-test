@@ -10,6 +10,7 @@ import {
   updateRecipeAsync
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
+import { SUCCESS } from '../../common/config/config';
 
 const Products = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
@@ -22,7 +23,7 @@ const Products = () => {
       if(response.payload){
         dispatch(openSnackbar({
           text: 'Recipes fetched!',
-          type: 'success',
+          type: SUCCESS,
         }))
       }
     })

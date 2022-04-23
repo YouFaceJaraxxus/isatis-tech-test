@@ -4,6 +4,7 @@ import loginClasses from './login.module.scss';
 import {useHistory} from 'react-router-dom'
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { setLoggedIn } from '../../redux/reducers/authSlice';
+import { ERROR } from '../../common/config/config';
 
 const Login = () => {
   const { theme } = useSelector((state) => state.common);
@@ -33,7 +34,7 @@ const Login = () => {
     } else {
       dispatch(openSnackbar({
         text: 'Incorrect mail or password!',
-        type: 'error',
+        type: ERROR,
       }));
     }
   }

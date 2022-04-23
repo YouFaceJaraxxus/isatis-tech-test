@@ -2,6 +2,8 @@ $primary-color: #537199;
 $primary-color-lighter: #99b7df;
 $dark-grey: #272727;
 $light-grey: #474747;
+$error: #d01111;
+$success: #59e836;
 $max-width: 1440px;
 
 $mobile-small: 360px;
@@ -12,17 +14,9 @@ $mobile-small: 360px;
   }
 }
 
-$mobile-medium: 375px;
-
-@mixin mobile-medium {
-  @media (max-width: #{$mobile-medium}) {
-    @content;
-  }
-}
-
 $mobile-medium: 395px;
 
-@mixin mobile-custom {
+@mixin mobile-medium {
   @media (max-width: #{$mobile-medium}) {
     @content;
   }
