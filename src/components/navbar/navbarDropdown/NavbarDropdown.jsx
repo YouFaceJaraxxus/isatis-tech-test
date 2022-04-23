@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import navbarDropdownClasses from './navbarDropdown.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -22,6 +22,20 @@ const NavbarDropdown = ({
     setDropdownOpen(!dropdownOpen);
   }
 
+  const dropdownMenuWrapperRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (dropdownMenuWrapperRef.current && !dropdownMenuWrapperRef.current.contains(event.target)) {
+      console.log('ACES');
+      setDropdownOpen(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownMenuWrapperRef]);
+
   return (
     <div className={cx({
       navbarDropdownWrapper: true,
@@ -29,22 +43,23 @@ const NavbarDropdown = ({
       marginRight: marginRight,
       marginTop: marginTop,
       marginBottom: marginBottom
-    })}>
+    })}
+    >
       <div className={navbarDropdownClasses.textChevron} onClick={toggleDropdown}>
         <div>{text}</div>
         <div className={navbarDropdownClasses.chevron}>{dropdownOpen ? chevronUp : chevronDown}</div>
       </div>
       {
         dropdownOpen && (
-          <div className={navbarDropdownClasses.dropdownMenuWrapper}>
+          <div ref={dropdownMenuWrapperRef} className={navbarDropdownClasses.dropdownMenuWrapper}>
             {
               options.map((option) => (
-                <div className={navbarDropdownClasses.dropdownItem} key={option.id} onClick={() => { 
+                <div className={navbarDropdownClasses.dropdownItem} key={option.id} onClick={() => {
                   option.action();
-                  if(option.closeDropdown){
+                  if (option.closeDropdown) {
                     setDropdownOpen(false);
                   }
-                 }}>
+                }}>
                   {option.text}
                 </div>
               ))
