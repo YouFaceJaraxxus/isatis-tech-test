@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createRecipeAsync,
@@ -11,9 +10,12 @@ import {
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { SUCCESS } from '../../common/config/config';
+import recipesClasses from './recipes.module.scss';
+import classNames from 'classnames/bind';
 
 const Recipes = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
+  const cx = classNames.bind(recipesClasses);
 
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
@@ -46,19 +48,10 @@ const Recipes = () => {
     dispatch(setFetchingRecipes(!fetchingRecipes));
   }
   return (
-    <div>
-      Hi I'm Recipes!;
-      <button onClick={toggleFetchingRecipes}>TOGGLE FETCHING</button>
-      {
-        fetchingRecipes ?
-          (
-            <div>FETCHING RECIPES</div>
-          )
-          :
-          (
-            <div>NOT FETCHING RECIPES</div>
-          )
-      }
+    <div className={recipesClasses.recipesWrapper}>
+      <div className={recipesClasses.recipesTitle}>
+        Recipes
+      </div>
       {
         recipes && recipes.map((recipe) => (
           <div key={recipe.id}>
