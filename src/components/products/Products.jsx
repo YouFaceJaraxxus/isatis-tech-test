@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createRecipeAsync,
-  getRecipeByIdAsync,
-  getRecipesAsync,
-  setFetchingRecipes,
-  softDeleteRecipeAsync,
-  updateRecipeAsync
-} from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { SUCCESS } from '../../common/config/config';
 import Table from '../table/Table';
 import productsClasses from './products.module.scss'
 import Modal from 'react-modal/lib/components/Modal';
+import { createProductAsync,  getProductsAsync, softDeleteProductAsync, updateProductAsync } from '../../redux/reducers/productsSlice';
+import { useForm } from 'react-hook-form';
 
 const customStyles = {
   content: {
@@ -28,23 +21,27 @@ const customStyles = {
 };
 
 const Products = () => {
-  const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
+  const { products } = useSelector((state) => state.products);
+
+  const {register, handleSubmit, setValue, reset} = useForm();
 
   const [isOpenModal, setOpenModal] = useState(false);
 
+  const [productToUpdate, setProductToUpdate] = useState(null);
+
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
-    dispatch(getRecipesAsync())
+    dispatch(getProductsAsync())
     .then((response) => {
       //successful fetch
       if(response.payload){
         dispatch(openSnackbar({
-          text: 'Recipes fetched!',
+          text: 'Products fetched!',
           type: SUCCESS,
         }))
       }
     })
-    dispatch(getRecipeByIdAsync(sampleRecipe));
+    // dispatch(getRecipeByIdAsync(sampleRecipe));
     /*dispatch(updateRecipeAsync({
       id: sampleRecipe,
       body: {
@@ -53,15 +50,16 @@ const Products = () => {
       },
     }));*/
     //dispatch(softDeleteRecipeAsync(sampleRecipe))
-    /*dispatch((createRecipeAsync({
-      quantity: 245.1,
-      unit: 'g'
-    })))*/
+    // dispatch((createProductAsync({
+    //   name: 'nesto',
+    //   price: 19.99,
+    //   margin: 10,
+    //   image: null,
+    //   recipeId: '-N07b1ZAnPJVFDZMmcpF',
+    //   active: true
+    // })));
   }, [])
   const dispatch = useDispatch();
-  const toggleFetchingRecipes = () => {
-    dispatch(setFetchingRecipes(!fetchingRecipes));
-  }
 
   const showCreateProductModal = () => {
     setOpenModal(true);
@@ -71,9 +69,34 @@ const Products = () => {
     setOpenModal(false);
   }
 
-  const handleCreateProduct = (e) => {
-    e.preventDefault();
-    console.log(e);
+  const deleteProduct = (productId) => {
+    dispatch(softDeleteProductAsync(productId));
+  }
+
+  const updateProduct = (product) => {
+    Object.keys(product).forEach(key => key !== 'id' && setValue(key, product[key]));
+    setProductToUpdate(product);
+    showCreateProductModal();
+  }
+
+  const handleFormSubmit = (data) => {
+    if (productToUpdate) {
+      dispatch(updateProductAsync({
+        id: productToUpdate.id,
+        body: {
+          ...data,
+          active: data.active === 'yes' ? true : false,
+        }
+      }));
+    } else {
+      dispatch(createProductAsync({
+        ...data,
+        active: data.active === 'yes' ? true : false,
+      }));
+    }
+    setProductToUpdate(null);
+    reset();
+    closeCreateProductModal();  
   }
 
 
@@ -85,31 +108,32 @@ const Products = () => {
         onRequestClose={closeCreateProductModal}
         style={customStyles}
       >
-        <h4>Create Product</h4>
-        <form className={productsClasses.createProductForm} onSubmit={handleCreateProduct}>
-          <input type='text' placeholder='Product Name'></input>
-          <input type='text' placeholder='Quantity'></input>
-          <select>
-            <option>Grams</option>
-            <option>Milligrams</option>
-            <option>Kilograms</option>
-            <option>Milliliter</option>
-            <option>Deciliter</option>
-            <option>Liter</option>
-          </select>
-          <input type='submit' value='Create'></input>
+        {!productToUpdate && <h4>Create Product</h4>}
+        {productToUpdate && <h4>Update Product</h4>}
+        <form className={productsClasses.createProductForm} onSubmit={handleSubmit(handleFormSubmit)}>
+          <input type='text' placeholder='Name' name='name' {...register('name')} ></input>
+          <input type='text' placeholder='Price' name='price' {...register('price')}></input>
+          <input type='text' placeholder='Margin' name='margin' {...register('margin')}></input>
+          <input type='text' placeholder='Recipe ID' name='recipeId' {...register('recipeId')}></input>
+          <input type='text' placeholder='Active' name='active' {...register('active')}></input>
+          <input type='text' placeholder='Image URL' name='image' {...register('image')}></input>
+          <input type='submit' value={productToUpdate ? 'Update' : 'Create'}></input>
         </form>
       </Modal>
-      <Table data={recipes.map(recipe => {
-        return {
-            'ID':recipe.id, 
-            'Material ID': recipe.rawMaterialId,
-            'Name': recipe.name,
-            'Quantity': recipe.quantity,
-            'Unit': recipe.unit
-          };
-        })}></Table>
-        <button className={productsClasses.createButton} onClick={showCreateProductModal}>Create Product</button>
+      <Table data={products} headers={{
+          id: 'ID',
+          name: 'Name',
+          price: 'Price',
+          margin: 'Margin',
+          recipeId: 'Recipe ID',
+          active: 'Active',
+          image: 'Image'
+          }} handleDelete={deleteProduct} handleUpdate={updateProduct} />
+        <button className={productsClasses.createButton} onClick={() => {
+          setProductToUpdate(null);
+          reset();
+          showCreateProductModal();
+          }}>Create Product</button>
     </div>
   )
 }

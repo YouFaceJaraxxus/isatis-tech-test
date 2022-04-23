@@ -5,12 +5,14 @@ import tableClasses from './table.module.scss';
 const Table = (props) => {
 
   const tableData = props.data;
+  const headers = props.headers;
 
   if (tableData.length === 0) {
-    return (<table></table>)
+    return (<h3>No products</h3>)
   }
 
-  const columns = Object.keys(tableData[0]);
+  const columns = Object.values(headers);
+  const keysToShow = Object.keys(headers);
 
   const tableHeader = () => {
     return columns.map( data => <th key={data}>{data}</th>);
@@ -18,7 +20,13 @@ const Table = (props) => {
 
   const tableRows = () => {
     return tableData.map(data => {
-      return <tr key={data.id}>{ columns.map(column => <td>{data[column]}</td>)}<td><button className={tableClasses.buttonEdit}>Edit</button></td><td><button className={tableClasses.buttonDelete}>Delete</button></td></tr>
+      return <tr key={data.ID}>{ keysToShow.map(column => <td>{data[column]}</td>)}
+        <td>
+          <button className={tableClasses.buttonEdit} onClick={() => props.handleUpdate(data)}>Update</button></td>
+        <td>
+          <button className={tableClasses.buttonDelete} onClick={() => props.handleDelete(data.ID)}>Delete</button>
+        </td>
+      </tr>
     })
   }
 
