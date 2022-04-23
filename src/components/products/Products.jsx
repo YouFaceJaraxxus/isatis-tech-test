@@ -11,6 +11,7 @@ import {
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
 import { SUCCESS } from '../../common/config/config';
+import Table from '../table/Table';
 
 const Products = () => {
   const { recipes, fetchingRecipes, currentRecipe } = useSelector((state) => state.recipes);
@@ -48,6 +49,7 @@ const Products = () => {
   return (
     <div>
       Hi I'm Products!;
+      <Table data={recipes}></Table>
       <button onClick={toggleFetchingRecipes}>TOGGLE FETCHING</button>
       {
         fetchingRecipes ?
