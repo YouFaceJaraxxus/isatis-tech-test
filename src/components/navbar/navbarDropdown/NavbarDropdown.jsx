@@ -25,7 +25,6 @@ const NavbarDropdown = ({
   const dropdownMenuWrapperRef = useRef(null);
   const handleClickOutside = (event) => {
     if (dropdownMenuWrapperRef.current && !dropdownMenuWrapperRef.current.contains(event.target)) {
-      console.log('ACES');
       setDropdownOpen(false);
     }
   }
