@@ -34,35 +34,19 @@
 
 
 .createProductForm {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+  @include modalForm;
 
   input {
-    display: block;
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #dcd9d9;
+    @include modalInput;
   }
 
 
   input[type="submit"] {
-    width: 40%;
-    border-radius: 5px;
-    margin-top: 10px;
-    background-color:  $success;
+    @include modalSubmit;
   }
 
   select {
-    margin-bottom: 10px;
-    width: 105%;
-    padding: 2%;
-    border-radius: 5px;
-    background-color: #dcd9d9;
+    @include modalSelect;
   }
 
   .checkBox {
@@ -84,9 +68,6 @@
   }
 
   .errorMessage {
-    font-size: 13px;
-    color: rgb(172, 20, 20);
-    font-weight: 900;
-    align-self: flex-start;
+    @include modalErrorMessage;
   }
 }
