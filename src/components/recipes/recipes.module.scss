@@ -1,11 +1,12 @@
+@import '../../common/styles/globalStyles.module.scss';
+
 .recipesTitle{
   font-size: 2em;
   width: 100%;
-  margin: 15px auto;
+  margin: 25px auto;
   font-weight: 700;
   text-align: center;
 }
-
 
 .recipesWrapper {
   display: flex;

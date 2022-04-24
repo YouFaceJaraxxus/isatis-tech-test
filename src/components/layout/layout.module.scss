@@ -1,0 +1,21 @@
+@import '../../common/styles/globalStyles.module.scss';
+
+.layoutWrapper{
+  min-height: 100vh;
+}
+
+.layoutWrapperSecondary{
+  @include secondary-background;
+}
+
+.layoutWrapperSecondaryLighter{
+  @include secondary-background-lighter;
+}
+
+.bodyWrapperSecondary{
+  @include white-text;
+}
+
+.bodyWrapperSecondaryLighter{
+  @include dark-grey-text;
+}

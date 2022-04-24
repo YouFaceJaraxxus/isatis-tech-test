@@ -11,7 +11,6 @@ import classNames from 'classnames/bind';
 import Table from '../table/Table';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal/lib/components/Modal';
-import { updateProductAsync } from '../../redux/reducers/productsSlice';
 import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
 import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
 
@@ -44,7 +43,7 @@ const Recipes = () => {
   const { rawMaterials } = useSelector((state) => state.rawMaterials);
   const cx = classNames.bind(recipesClasses);
 
-  const {register, handleSubmit, setValue, reset} = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   const [recipeToUpdate, setRecipeToUpdate] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -53,15 +52,15 @@ const Recipes = () => {
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
     dispatch(getRecipesAsync())
-    .then((response) => {
-      //successful fetch
-      if(response.payload){
-        dispatch(openSnackbar({
-          text: 'Recipes fetched!',
-          type: SUCCESS,
-        }))
-      }
-    })
+      .then((response) => {
+        //successful fetch
+        if (response.payload) {
+          dispatch(openSnackbar({
+            text: 'Recipes fetched!',
+            type: SUCCESS,
+          }))
+        }
+      })
 
     dispatch(getRawMaterialsAsync());
   }, [])
@@ -113,13 +112,15 @@ const Recipes = () => {
     }
     setRecipeToUpdate(null);
     reset();
-    closeCreateRecipeModal();  
+    closeCreateRecipeModal();
   }
 
   return (
-    <div className={recipesClasses.recipesWrapper}>
+    <div className={cx({
+      recipesWrapper: true
+    })}>
       <div className={recipesClasses.recipesTitle}>
-        All recipes:
+        Recipes
       </div>
       <Modal
         isOpen={isOpenModal}
@@ -150,19 +151,19 @@ const Recipes = () => {
         </form>
       </Modal>
       <ConfirmationDialog {...confirmDialogConfig} />
-        <Table data={recipes} headers={{
-          id: 'ID',
-          rawMaterialId: 'Raw Material ID',
-          name: 'Name',
-          quantity: 'Quantity',
-          unit: 'Unit'
-        }} handleUpdate={updateRecipe} handleDelete={handleDeleteRecipeClick}/>
-      
+      <Table data={recipes} headers={{
+        id: 'ID',
+        rawMaterialId: 'Raw Material ID',
+        name: 'Name',
+        quantity: 'Quantity',
+        unit: 'Unit'
+      }} handleUpdate={updateRecipe} handleDelete={handleDeleteRecipeClick} />
+
       <button className={recipesClasses.createButton} onClick={() => {
-          setRecipeToUpdate(null);
-          reset();
-          showCreateRecipeModal();
-          }}>Create Recipe</button>
+        setRecipeToUpdate(null);
+        reset();
+        showCreateRecipeModal();
+      }}>Create Recipe</button>
     </div>
   )
 }

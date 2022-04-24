@@ -8,6 +8,14 @@
   background-color: $primary-color-lighter;
 }
 
+@mixin secondary-background {
+  background-color: $secondary-color;
+}
+
+@mixin secondary-background-lighter {
+  background-color: $secondary-color-lighter;
+}
+
 @mixin primary-background-dropdown {
   background-color: $white;
 }
@@ -34,6 +42,10 @@
 
 @mixin white-text {
   color: $white;
+}
+
+@mixin dark-grey-text {
+  color: $dark-grey;
 }
 
 @mixin white-background {
