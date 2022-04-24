@@ -82,7 +82,7 @@ export const recipesSlice = createSlice({
     })
       .addCase(getRecipesAsync.fulfilled, (state, action) => {
         //we can't get arrays from firebase, only objects, which we can turn into arrays and manipulate as arrays
-        state.recipes = sortArrayByName(getArrayFromObject(action.payload));
+        state.recipes = sortArrayByName(getArrayFromObject(action.payload).filter((recipe) => !recipe.isDeleted));
         state.fetchingRecipes = false;
       })
       .addCase(getRecipesAsync.rejected, (state) => {

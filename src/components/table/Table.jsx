@@ -1,11 +1,13 @@
 import React from 'react'
 import tableClasses from './table.module.scss';
+import classNames from 'classnames/bind';
 
 
 const Table = (props) => {
-
+  const cx = classNames.bind(tableClasses);
   const tableData = props.data;
   const headers = props.headers;
+  const sizes = props.sizes;
 
   if (tableData.length === 0) {
     return (<h3>No products</h3>)
@@ -15,12 +17,31 @@ const Table = (props) => {
   const keysToShow = Object.keys(headers);
 
   const tableHeader = () => {
-    return columns.map( data => <th key={data}>{data}</th>);
+    return columns.map((data, index) => {
+      const size = sizes ? sizes[index] : null; return (
+        <th key={data} className={getWidth(size)}>{data}</th>
+      )
+    });
+  }
+
+  const getWidth = (size) => {
+    return cx({
+      largeCell: size === 'lg',
+      mediumCell: size === 'md',
+      smallCell: size === 's',
+      xSmallCell: size === 'xs',
+    })
   }
 
   const tableRows = () => {
-    return tableData.map(data => {
-      return <tr key={data.ID}>{ keysToShow.map(column => <td>{data[column]}</td>)}
+    return tableData.map((data, index) => {
+
+      return <tr key={data.id} >{keysToShow.map((column, index) => {
+        const size = sizes ? sizes[index] : null;
+        return (
+          <td key={index} className={getWidth(size)}>{data[column]}</td>
+          )
+        })}
         <td>
           <button className={tableClasses.buttonEdit} onClick={() => props.handleUpdate(data)}>Update</button></td>
         <td>

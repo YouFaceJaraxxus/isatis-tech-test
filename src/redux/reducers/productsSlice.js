@@ -75,7 +75,7 @@ export const productsSlice = createSlice({
     })
       .addCase(getProductsAsync.fulfilled, (state, action) => {
         //we can't get arrays from firebase, only objects, which we can turn into arrays and manipulate as arrays
-        state.products = getArrayFromObject(action.payload);
+        state.products = getArrayFromObject(action.payload).filter((product) => product.active);
         state.fetchingproducts = false;
       })
       .addCase(getProductsAsync.rejected, (state) => {

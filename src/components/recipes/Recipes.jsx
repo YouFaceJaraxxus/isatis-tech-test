@@ -151,13 +151,18 @@ const Recipes = () => {
         </form>
       </Modal>
       <ConfirmationDialog {...confirmDialogConfig} />
-      <Table data={recipes} headers={{
-        id: 'ID',
-        rawMaterialId: 'Raw Material ID',
-        name: 'Name',
-        quantity: 'Quantity',
-        unit: 'Unit'
-      }} handleUpdate={updateRecipe} handleDelete={handleDeleteRecipeClick} />
+      <Table data={recipes}
+        headers={{
+          id: 'ID',
+          rawMaterialId: 'Raw Material ID',
+          name: 'Name',
+          quantity: 'Quantity',
+          unit: 'Unit'
+        }} 
+        handleUpdate={updateRecipe} 
+        handleDelete={handleDeleteRecipeClick}
+        sizes={['lg', 'lg', 'lg', 'md', 'xs']}
+      />
 
       <button className={recipesClasses.createButton} onClick={() => {
         setRecipeToUpdate(null);

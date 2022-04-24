@@ -1,3 +1,28 @@
+$table-cell-large: 200px;
+$table-cell-medium: 150px;
+$table-cell-small: 100px;
+$table-cell-xSmall: 50px;
+
+@mixin largeCell{
+  min-width: $table-cell-large;
+  max-width: $table-cell-large;
+}
+
+@mixin mediumCell{
+  min-width: $table-cell-medium;
+  max-width: $table-cell-medium;
+}
+
+@mixin smallCell{
+  min-width: $table-cell-small;
+  max-width: $table-cell-small;
+}
+
+@mixin xSmallCell{
+  min-width: $table-cell-xSmall;
+  max-width: $table-cell-xSmall;
+}
+
 table td{
   border-bottom: 1px solid;
   padding: 10px 0;
