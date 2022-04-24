@@ -74,6 +74,8 @@ const Navbar = () => {
       <div className={cx({
         navbarItemsMobile: true,
         hideDropdown: !navbarDropdownOpen,
+        navbarItemsDark: theme === DARK_THEME,
+        navbarItemsLighter: theme === LIGHT_THEME
       })}>
         {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginTop />}
         {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginTop />}

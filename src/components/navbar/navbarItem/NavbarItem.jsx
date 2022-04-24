@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import classes from './navbarItem.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
+import { setNavbarDropdownOpen } from '../../../redux/reducers/commonSlice';
 
 const NavbarItem = ({
   route,
@@ -14,8 +16,10 @@ const NavbarItem = ({
 }) => {
   const cx = classNames.bind(classes);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
+    dispatch(setNavbarDropdownOpen(false));
     if (route) {
       history.push(route);
     }

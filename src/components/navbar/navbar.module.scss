@@ -46,11 +46,18 @@
     margin: auto 0 auto auto;
   }
 
+  .navbarItemsDark{
+    @include primary-background;
+  }
+
+  .navbarItemsLighter{
+    @include primary-background-lighter;
+  }
+
   .navbarItemsMobile {
     display: none;
 
     @include tablet-small {
-      @include primary-background-lighter;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -70,7 +77,6 @@
     display: none;
 
     @include tablet-small {
-      @include primary-background;
       display: flex;
       justify-content: space-between;
       align-items: center;

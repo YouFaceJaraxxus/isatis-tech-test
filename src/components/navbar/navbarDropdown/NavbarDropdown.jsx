@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import navbarDropdownClasses from './navbarDropdown.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DARK_THEME, LIGHT_THEME } from '../../../common/config/config';
+import { setNavbarDropdownOpen } from '../../../redux/reducers/commonSlice';
 
 const NavbarDropdown = ({
   text,
@@ -14,6 +15,7 @@ const NavbarDropdown = ({
   marginBottom = false
 }) => {
   const cx = classNames.bind(navbarDropdownClasses);
+  const dispatch = useDispatch();
 
   const { theme } = useSelector((state) => state.common);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -62,6 +64,7 @@ const NavbarDropdown = ({
                   dropdownItemPrimaryLight: theme === LIGHT_THEME
                 })} key={option.id} onClick={() => {
                   option.action();
+                  dispatch(setNavbarDropdownOpen(false));
                   if (option.closeDropdown) {
                     setDropdownOpen(false);
                   }
