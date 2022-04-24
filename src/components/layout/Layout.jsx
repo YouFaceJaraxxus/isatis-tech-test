@@ -4,7 +4,7 @@ import Navbar from '../navbar/Navbar';
 import Snackbar from '../snackbar/Snackbar';
 
 const Layout = ({ children }) => {
-  const {showSnackbar} = useSelector((state) => state.common);
+  const { showSnackbar } = useSelector((state) => state.common);
   return (
     <>
       <Navbar />

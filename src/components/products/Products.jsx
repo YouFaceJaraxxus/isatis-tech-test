@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
-import { SUCCESS } from '../../common/config/config';
+import { ERROR, SUCCESS } from '../../common/config/config';
 import Table from '../table/Table';
 import productsClasses from './products.module.scss'
 import Modal from 'react-modal/lib/components/Modal';
-import { createProductAsync,  getProductsAsync, softDeleteProductAsync, updateProductAsync } from '../../redux/reducers/productsSlice';
+import { createProductAsync, getProductsAsync, softDeleteProductAsync, updateProductAsync } from '../../redux/reducers/productsSlice';
 import { useForm } from 'react-hook-form';
+import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
+
+const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the product?';
+const initialConfirmDialogState = {
+  isOpen: false,
+  title: null,
+  confirmText: null,
+  cancelText: null,
+  confirmAction: null,
+  cancelAction: null,
+  type: null,
+}
 
 const customStyles = {
   content: {
@@ -23,9 +35,11 @@ const customStyles = {
 const Products = () => {
   const { products } = useSelector((state) => state.products);
 
-  const {register, handleSubmit, setValue, reset} = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   const [isOpenModal, setOpenModal] = useState(false);
+
+  const [confirmDialogConfig, setConfirmDialogConfig] = useState(initialConfirmDialogState);
 
   const [productToUpdate, setProductToUpdate] = useState(null);
 
@@ -33,15 +47,15 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(getProductsAsync())
-    .then((response) => {
-      //successful fetch
-      if(response.payload){
-        dispatch(openSnackbar({
-          text: 'Products fetched!',
-          type: SUCCESS,
-        }))
-      }
-    })
+      .then((response) => {
+        //successful fetch
+        if (response.payload) {
+          dispatch(openSnackbar({
+            text: 'Products fetched!',
+            type: SUCCESS,
+          }))
+        }
+      })
   }, []);
 
   const showCreateProductModal = () => {
@@ -54,6 +68,20 @@ const Products = () => {
 
   const deleteProduct = (productId) => {
     dispatch(softDeleteProductAsync(productId));
+  }
+
+  const closeDialog = () => {
+    setConfirmDialogConfig(initialConfirmDialogState);
+  }
+
+  const handleDeleteProductClick = (productId) => {
+    setConfirmDialogConfig({
+      isOpen: true,
+      title: CONFIRM_DELETE_TITLE,
+      type: ERROR,
+      confirmAction: () => { deleteProduct(productId); closeDialog(); },
+      cancelAction: closeDialog,
+    });
   }
 
   const updateProduct = (product) => {
@@ -79,7 +107,7 @@ const Products = () => {
     }
     setProductToUpdate(null);
     reset();
-    closeCreateProductModal();  
+    closeCreateProductModal();
   }
 
 
@@ -103,20 +131,21 @@ const Products = () => {
           <input type='submit' value={productToUpdate ? 'Update' : 'Create'}></input>
         </form>
       </Modal>
+      <ConfirmationDialog {...confirmDialogConfig} />
       <Table data={products} headers={{
-          id: 'ID',
-          name: 'Name',
-          price: 'Price',
-          margin: 'Margin',
-          recipeId: 'Recipe ID',
-          active: 'Active',
-          image: 'Image'
-          }} handleDelete={deleteProduct} handleUpdate={updateProduct} />
-        <button className={productsClasses.createButton} onClick={() => {
-          setProductToUpdate(null);
-          reset();
-          showCreateProductModal();
-          }}>Create Product</button>
+        id: 'ID',
+        name: 'Name',
+        price: 'Price',
+        margin: 'Margin',
+        recipeId: 'Recipe ID',
+        active: 'Active',
+        image: 'Image'
+      }} handleDelete={handleDeleteProductClick} handleUpdate={updateProduct} />
+      <button className={productsClasses.createButton} onClick={() => {
+        setProductToUpdate(null);
+        reset();
+        showCreateProductModal();
+      }}>Create Product</button>
     </div>
   )
 }

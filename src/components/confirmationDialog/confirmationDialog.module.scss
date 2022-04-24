@@ -1,0 +1,41 @@
+@import '../../common/styles/globalStyles.module.scss';
+
+.confirmationDialogWrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title{
+    font-size: 1.2em;
+    word-break: break-all;
+  }
+
+  .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .button{
+    color: red;
+  }
+
+  .confirmButtonRed{
+    background-color: $error;
+  }
+
+  .confirmButtonGreen{
+    background-color: $success;
+  }
+
+  .cancelbutton{
+    background-color: $neutral;
+  }
+
+}

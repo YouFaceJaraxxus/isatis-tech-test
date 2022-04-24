@@ -4,9 +4,9 @@ import { LIGHT_THEME } from '../../common/config/config';
 export const commonSlice = createSlice({
   name: 'common',
   initialState: {
-    showSnackbar: true,
-    snackbarText: 'aa',
-    snackbarType: 'aaa',
+    showSnackbar: false,
+    snackbarText: '',
+    snackbarType: '',
     navbarDropdownOpen: false,
     theme: LIGHT_THEME,
   },
@@ -26,7 +26,7 @@ export const commonSlice = createSlice({
     },
     setTheme: (state, action) => {
       state.theme = action.payload;
-    }
+    },
   },
 });
 
