@@ -45,6 +45,14 @@ $navbar-dropdown-margin: 10px;
     }
   }
 
+  .dropdownItemPrimary{
+    @include primary-text;
+  }
+
+  .dropdownItemPrimaryLight{
+    @include primary-text-lighter;
+  }
+
   .dropdownItem{
     text-align: left;
     width: 100%;

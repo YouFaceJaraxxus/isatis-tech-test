@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import navbarDropdownClasses from './navbarDropdown.module.scss';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector } from 'react-redux';
+import { DARK_THEME, LIGHT_THEME } from '../../../common/config/config';
 
 const NavbarDropdown = ({
   text,
@@ -12,7 +14,8 @@ const NavbarDropdown = ({
   marginBottom = false
 }) => {
   const cx = classNames.bind(navbarDropdownClasses);
-  const history = useHistory();
+
+  const { theme } = useSelector((state) => state.common);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const chevronDown = '\u25BC';
@@ -53,7 +56,11 @@ const NavbarDropdown = ({
           <div ref={dropdownMenuWrapperRef} className={navbarDropdownClasses.dropdownMenuWrapper}>
             {
               options.map((option) => (
-                <div className={navbarDropdownClasses.dropdownItem} key={option.id} onClick={() => {
+                <div className={cx({
+                  dropdownItem: true,
+                  dropdownItemPrimary: theme === DARK_THEME,
+                  dropdownItemPrimaryLight: theme === LIGHT_THEME
+                })} key={option.id} onClick={() => {
                   option.action();
                   if (option.closeDropdown) {
                     setDropdownOpen(false);

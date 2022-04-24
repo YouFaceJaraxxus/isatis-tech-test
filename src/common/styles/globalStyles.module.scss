@@ -28,6 +28,10 @@
   color: $primary-color;
 }
 
+@mixin primary-text-lighter {
+  color: $primary-color-lighter;
+}
+
 @mixin white-text {
   color: $white;
 }

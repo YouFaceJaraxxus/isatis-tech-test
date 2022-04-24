@@ -11,7 +11,7 @@ import { setLoggedIn } from '../../redux/reducers/authSlice';
 
 const Navbar = () => {
   const cx = classNames.bind(navbarClasses);
-  const { navbarDropdownOpen } = useSelector((state) => state.common);
+  const { navbarDropdownOpen, theme } = useSelector((state) => state.common);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const navbarDropdownOptions = [
     {
-      id:1,
+      id: 1,
       action: () => {
         dispatch(setTheme(LIGHT_THEME));
       },
@@ -33,7 +33,7 @@ const Navbar = () => {
       closeDropdown: true,
     },
     {
-      id:2,
+      id: 2,
       action: () => {
         dispatch(setTheme(DARK_THEME));
       },
@@ -45,17 +45,19 @@ const Navbar = () => {
   return (
     <div className={cx({
       navbarWrapper: true,
+      navbarPrimary: theme === DARK_THEME,
+      navbarPrimaryLight: theme === LIGHT_THEME
     })}>
       <NavbarLogo />
       <div className={navbarClasses.navbarItems}>
         <div className={navbarClasses.navbarLeft}>
-          {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft /> }
-          {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginLeft /> }
+          {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginLeft />}
+          {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginLeft />}
         </div>
         <div className={navbarClasses.navbarRight}>
-          <NavbarDropdown text={'Theme'} marginRight options={navbarDropdownOptions}/>
-          { isLoggedIn && <NavbarItem text={'Logout'} marginRight route={'/login'} additionalAction={logout}/> }
-          { !isLoggedIn && <NavbarItem text={'Login'} marginRight route={'/login'}/> }
+          <NavbarDropdown text={'Theme'} marginRight options={navbarDropdownOptions} />
+          {isLoggedIn && <NavbarItem text={'Logout'} marginRight route={'/login'} additionalAction={logout} />}
+          {!isLoggedIn && <NavbarItem text={'Login'} marginRight route={'/login'} />}
         </div>
       </div>
 
@@ -72,11 +74,11 @@ const Navbar = () => {
         navbarItemsMobile: true,
         hideDropdown: !navbarDropdownOpen,
       })}>
-        {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginTop /> }
-        {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginTop /> }
-        <NavbarDropdown text={'Theme'} marginTop options={navbarDropdownOptions}/>
-        { isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/login'} additionalAction={logout}/> }
-        { !isLoggedIn && <NavbarItem text={'Login'} marginTop marginBottom route={'/login'}/> }
+        {isLoggedIn && <NavbarItem route={'/recipes'} text={'Recipes'} marginTop />}
+        {isLoggedIn && <NavbarItem route={'/products'} text={'Products'} marginTop />}
+        <NavbarDropdown text={'Theme'} marginTop options={navbarDropdownOptions} />
+        {isLoggedIn && <NavbarItem text={'Logout'} marginTop marginBottom route={'/login'} additionalAction={logout} />}
+        {!isLoggedIn && <NavbarItem text={'Login'} marginTop marginBottom route={'/login'} />}
       </div>
     </div>
   )

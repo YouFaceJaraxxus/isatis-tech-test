@@ -1,7 +1,15 @@
 @import '../../common/styles/globalStyles.module.scss';
 
-.navbarWrapper {
+.navbarPrimary{
   @include primary-background;
+}
+
+.navbarPrimaryLight{
+  @include primary-background-lighter;
+}
+
+.navbarWrapper {
+  
   @include white-text;
 
   @mixin navbar-container {
