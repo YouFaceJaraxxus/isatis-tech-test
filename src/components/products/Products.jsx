@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form';
 import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
 import { getRecipesAsync } from '../../redux/reducers/recipesSlice';
 import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
-import { ErrorMessage } from '@hookform/error-message';
 
 const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the product?';
 const initialConfirmDialogState = {
