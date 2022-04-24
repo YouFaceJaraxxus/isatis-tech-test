@@ -63,7 +63,8 @@ const Navbar = () => {
 
       <div className={cx({
         navbarBurgerWrapper: true,
-        navbarBurgerWrapperLighter: navbarDropdownOpen
+        navbarBurgerWrapperDark: theme === DARK_THEME,
+        navbarBurgerWrapperLighter: theme === LIGHT_THEME
       })} onClick={handleBurgerClick}>
         <div></div>
         <div></div>

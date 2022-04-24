@@ -85,7 +85,6 @@
       }
 
       &>div {
-        background-color: rgb(24, 17, 68);
         width: 20px;
         margin: auto;
         height: 3px;
@@ -93,9 +92,17 @@
     }
   }
 
-  .navbarBurgerWrapperLighter{
+  .navbarBurgerWrapperDark{
+    @include primary-background;
     &>div{
-      background-color: rgb(129, 151, 174);
+      @include background-white;
+    }
+  }
+
+  .navbarBurgerWrapperLighter{
+    @include primary-background-lighter;
+    &>div{
+      @include background-white;
     }
   }
 
