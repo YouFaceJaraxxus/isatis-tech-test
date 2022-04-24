@@ -1,41 +1,74 @@
 @import '../../common/styles/globalStyles.module.scss';
 
-.confirmationDialogWrapper{
+.confirmationDialogRed {
+  @include background-error-lighter
+}
+
+.confirmationDialogGreen {
+  @include background-success-lighter
+}
+
+.confirmationDialogWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  .title{
-    font-size: 1.2em;
-    word-break: break-all;
+  padding: 20px 30px;
+  border-radius: 5px;
+  box-shadow: 1px 1px #888888;
+
+  .title {
+    font-size: 1.5em;
+    word-break: break-word;
+    text-align: center;
+    margin-bottom: 15px;
   }
 
-  .buttons{
+  .buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
   }
 
-  .button{
-    color: red;
+  .confirmationButton {
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    min-width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
-  .confirmButtonRed{
+  .confirmButton {
+    @include white-text;
+  }
+
+  .confirmButtonRed {
     background-color: $error;
   }
 
-  .confirmButtonGreen{
+  .confirmButtonGreen {
     background-color: $success;
   }
 
-  .cancelbutton{
-    background-color: $neutral;
+  .cancelButton {
+    @include background-white;
+    margin-left: 20px;
   }
 
 }

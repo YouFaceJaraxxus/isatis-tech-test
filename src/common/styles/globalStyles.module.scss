@@ -9,7 +9,19 @@
 }
 
 @mixin primary-background-dropdown {
-  background-color: white;
+  background-color: $white;
+}
+
+@mixin background-white {
+  background-color: $white;
+}
+
+@mixin background-error-lighter {
+  background-color: $error-lighter;
+}
+
+@mixin background-success-lighter {
+  background-color: $success-lighter;
 }
 
 @mixin primary-text {
@@ -17,7 +29,11 @@
 }
 
 @mixin white-text {
-  color: white;
+  color: $white;
+}
+
+@mixin white-background {
+  color: $white;
 }
 
 @mixin layout {
