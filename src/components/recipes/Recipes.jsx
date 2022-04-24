@@ -12,6 +12,7 @@ import Table from '../table/Table';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal/lib/components/Modal';
 import { updateProductAsync } from '../../redux/reducers/productsSlice';
+import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
 
 const customStyles = {
   content: {
@@ -28,6 +29,7 @@ const customStyles = {
 
 const Recipes = () => {
   const { recipes } = useSelector((state) => state.recipes);
+  const { rawMaterials } = useSelector((state) => state.rawMaterials);
   const cx = classNames.bind(recipesClasses);
 
   const {register, handleSubmit, setValue, reset} = useForm();
@@ -47,6 +49,8 @@ const Recipes = () => {
         }))
       }
     })
+
+    dispatch(getRawMaterialsAsync());
   }, [])
   const dispatch = useDispatch();
 
@@ -100,6 +104,13 @@ const Recipes = () => {
         <form className={recipesClasses.createRecipeForm} onSubmit={handleSubmit(handleFormSubmit)}>
           <input type='text' placeholder='Name' name='name' {...register('name')} ></input>
           <input type='text' placeholder='Quantity' name='quantity' {...register('quantity')} ></input>
+          <select name='rawMaterialId' {...register('rawMaterialId')}>
+            {
+              rawMaterials?.map((rawMaterial) => (
+                <option value={rawMaterial.id} key={rawMaterial.id}>{rawMaterial.name}</option>
+              ))
+            }
+          </select>
           <select name='unit' {...register('unit')}>
             <option>g</option>
             <option>kg</option>
