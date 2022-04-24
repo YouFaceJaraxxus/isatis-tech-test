@@ -1,8 +1,9 @@
 import { get, patch, post, put } from "../common/baseService"
 
 const RECIPES_PATH = 'recipes';
+const SORT_KEY = 'name';
 export const getAllRecipes = () => {
-  return get(RECIPES_PATH);
+  return get(RECIPES_PATH, SORT_KEY);
 }
 
 export const getRecipeById = (id) => {

@@ -1,5 +1,10 @@
-table th, td{
-  border: 1px solid;
+table td{
+  border-bottom: 1px solid;
+  padding: 10px 0;
+}
+
+table th{
+  border-bottom: 3px solid;
 }
 
 .table {

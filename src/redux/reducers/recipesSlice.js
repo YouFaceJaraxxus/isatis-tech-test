@@ -53,6 +53,13 @@ const getArrayFromObject = (recipeObject) => Object.entries(recipeObject)
     }
   });
 
+  const sortArrayByName = (array) => array.sort((a, b) => {
+    const aName = a.name.toLowerCase();
+    const bName = b.name.toLowerCase();
+    return (aName<bName?-1:(aName>bName?1:0));
+  })
+
+
 export const recipesSlice = createSlice({
   name: 'recipes',
   initialState: {
@@ -75,7 +82,7 @@ export const recipesSlice = createSlice({
     })
       .addCase(getRecipesAsync.fulfilled, (state, action) => {
         //we can't get arrays from firebase, only objects, which we can turn into arrays and manipulate as arrays
-        state.recipes = getArrayFromObject(action.payload);
+        state.recipes = sortArrayByName(getArrayFromObject(action.payload));
         state.fetchingRecipes = false;
       })
       .addCase(getRecipesAsync.rejected, (state) => {
@@ -95,11 +102,11 @@ export const recipesSlice = createSlice({
         state.creatingRecipe = true;
       })
       .addCase(createRecipeAsync.fulfilled, (state, action) => {
-        state.recipes = [...state.recipes, {
+        state.recipes = sortArrayByName([...state.recipes, {
           id: action.payload.name,
           rawMaterialId: action.payload.name,
           ...action.meta.arg,
-        }]
+        }]);
         state.creatingRecipe = false;
       })
       .addCase(createRecipeAsync.rejected, (state) => {
@@ -109,7 +116,7 @@ export const recipesSlice = createSlice({
         state.updatingRecipe = true;
       })
       .addCase(updateRecipeAsync.fulfilled, (state, action) => {
-        state.recipes = state.recipes.map((recipe) => {
+        state.recipes = sortArrayByName(state.recipes.map((recipe) => {
           if(recipe.id === action.meta.arg.id){
             //spread old recipe and overwrite data with new updated recipe's spread data
             return {
@@ -118,7 +125,7 @@ export const recipesSlice = createSlice({
             };
           }
           else return recipe;
-        })
+        }));
         state.updatingRecipe = false;
       })
       .addCase(updateRecipeAsync.rejected, (state) => {

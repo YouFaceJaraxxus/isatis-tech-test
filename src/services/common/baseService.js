@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { API_BASE_URL, API_POSTFIX } from '../../common/config/config';
 
-export const get = (path, config = {}, isRawUrl = false) => {
-  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}`;
+export const get = (path, orderByKey = null, config = {}, isRawUrl = false) => {
+  const orderBy = orderByKey? `?orderBy=\"${orderByKey}\"` : '';
+  console.log('orderBy', orderBy);
+  const url = isRawUrl ? path : `${API_BASE_URL}${path}${API_POSTFIX}${orderBy}`;
   return axios.get(url, config);
 }
 
