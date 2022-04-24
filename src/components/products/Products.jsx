@@ -132,7 +132,9 @@ const Products = () => {
         </form>
       </Modal>
       <ConfirmationDialog {...confirmDialogConfig} />
-      <Table data={products} headers={{
+      <Table 
+      data={products} 
+      headers={{
         id: 'ID',
         name: 'Name',
         price: 'Price',
@@ -140,7 +142,11 @@ const Products = () => {
         recipeId: 'Recipe ID',
         active: 'Active',
         image: 'Image'
-      }} handleDelete={handleDeleteProductClick} handleUpdate={updateProduct} />
+      }} 
+      handleDelete={handleDeleteProductClick} 
+      handleUpdate={updateProduct} 
+      sizes={['lg', 'lg', 's', 'xs', 'lg', 'xs', 'lg']}
+      />
       <button className={productsClasses.createButton} onClick={() => {
         setProductToUpdate(null);
         reset();

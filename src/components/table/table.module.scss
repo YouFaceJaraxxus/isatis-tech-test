@@ -3,24 +3,20 @@ $table-cell-medium: 150px;
 $table-cell-small: 100px;
 $table-cell-xSmall: 50px;
 
-@mixin largeCell{
+.largeCell{
   min-width: $table-cell-large;
-  max-width: $table-cell-large;
 }
 
-@mixin mediumCell{
+.mediumCell{
   min-width: $table-cell-medium;
-  max-width: $table-cell-medium;
 }
 
-@mixin smallCell{
+.smallCell{
   min-width: $table-cell-small;
-  max-width: $table-cell-small;
 }
 
-@mixin xSmallCell{
+.xSmallCell{
   min-width: $table-cell-xSmall;
-  max-width: $table-cell-xSmall;
 }
 
 table td{
@@ -35,9 +31,12 @@ table th{
 .table {
   border-collapse: collapse;
   text-align: center;
-  width: 100%;
-  // display: block;
-  // overflow-x: scroll;
+  overflow-y: hidden;
+  display: block;
+  max-width: 95%;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .buttonEdit {
