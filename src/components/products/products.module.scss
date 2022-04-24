@@ -1,13 +1,5 @@
-.recipesTitle{
-  font-size: 2em;
-  width: 100%;
-  margin: 15px auto;
-  font-weight: 700;
-  text-align: center;
-}
 
-
-.recipesWrapper {
+.productsWrapper {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -29,7 +21,7 @@
 }
 
 
-.createRecipeForm {
+.createProductForm {
   display: block;
 
   input {
