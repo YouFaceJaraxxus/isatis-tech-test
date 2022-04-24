@@ -34,15 +34,48 @@
 
 
 .createProductForm {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 
   input {
     display: block;
     margin-bottom: 10px;
+    width: 100%;
+  }
+
+  input[type="submit"] {
+    width: 40%;
   }
 
   select {
     margin-bottom: 10px;
+    width: 103%;
+    height: 25px;
+  }
+
+  .checkBox {
+    display: block;
     width: 100%;
+  
+    input {
+      display: inline;
+      width: 20px !important;
+      margin-left: -2%;
+    }
+  
+    label {
+      display: inline;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+
+  .errorMessage {
+    font-size: 12px;
+    color: red;
+    align-self: flex-start;
   }
 }
