@@ -113,7 +113,7 @@ const Products = () => {
 
   return (
     <div className={productsClasses.productsWrapper}>
-      <h3>All Products:</h3>
+      <div className={productsClasses.productsTitle}>Products</div>
       <Modal
         isOpen={isOpenModal}
         onRequestClose={closeCreateProductModal}

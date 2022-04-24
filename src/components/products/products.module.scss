@@ -1,9 +1,17 @@
 
-.recipesWrapper {
+.productsWrapper {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 95%;
   margin: auto;
+}
+
+.productsTitle{
+  font-size: 2em;
+  width: 100%;
+  margin: 30px auto;
+  font-weight: 700;
+  text-align: center;
 }
 
 .createButton {
