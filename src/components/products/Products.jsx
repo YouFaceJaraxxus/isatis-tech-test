@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
 import { getRecipesAsync } from '../../redux/reducers/recipesSlice';
 import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
+import modalStyles from '../../common/modalStyles';
 
 const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the product?';
 const initialConfirmDialogState = {
@@ -22,28 +23,12 @@ const initialConfirmDialogState = {
   type: null,
 }
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '20%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-};
-
 const Products = () => {
   const { products } = useSelector((state) => state.products);
   const { recipes } = useSelector((state) => state.recipes);
   const { rawMaterials } = useSelector((state) => state.rawMaterials);
 
-  const { register, handleSubmit, setValue, reset, setError, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors  } = useForm();
 
   const [isOpenModal, setOpenModal] = useState(false);
 
@@ -73,6 +58,7 @@ const Products = () => {
   }
 
   const closeCreateProductModal = () => {
+    clearErrors();
     setOpenModal(false);
   }
 
@@ -110,6 +96,8 @@ const Products = () => {
       });
       return;
     }
+    clearErrors();
+
     const recipe = recipes.find( r => r.id === data.recipeId);
     const rawMaterial = rawMaterials.find(rm => rm.id === recipe.rawMaterialId);
     console.log(recipe);
@@ -144,17 +132,17 @@ const Products = () => {
       <Modal
         isOpen={isOpenModal}
         onRequestClose={closeCreateProductModal}
-        style={customStyles}
+        style={modalStyles}
       >
         {!productToUpdate && <h4>Create Product</h4>}
         {productToUpdate && <h4>Update Product</h4>}
         <form className={productsClasses.createProductForm} onSubmit={handleSubmit(handleFormSubmit)}>
-          {errors.name && <label className={productsClasses.errorMessage}>Please enter product name.</label>}
+          {errors.name && <label className={productsClasses.errorMessage}>{errors.name.message}</label>}
           <input type='text' placeholder='Name' name='name' {...register('name', { required: 'Please enter product name.' })} ></input>
-          {errors.priceMargin && <label className={productsClasses.errorMessage}>Please enter product price or margin.</label>}
+          {errors.priceMargin && <label className={productsClasses.errorMessage}>{errors.priceMargin.message}</label>}
           <input type='number' step='.01' placeholder='Price' name='price' {...register('price')}></input>
           <input type='number' step='.01' placeholder='Margin' name='margin' {...register('margin')}></input>
-          {errors.recipeId && <label className={productsClasses.errorMessage}>Please select recipe for product.</label>}
+          {errors.recipeId && <label className={productsClasses.errorMessage}>{errors.recipeId.message}</label>}
           <select name='recipeId' {...register('recipeId', { required: 'Please select recipe.' })}>
             {
               recipes?.map((recipe) => !recipe.isDeleted && (
@@ -162,7 +150,7 @@ const Products = () => {
               ))  
             }
           </select>
-          {errors.image && <label className={productsClasses.errorMessage}>Please enter product image URL.</label>}
+          {errors.image && <label className={productsClasses.errorMessage}>{errors.image.message}</label>}
           <input type='text' placeholder='Image URL' name='image' {...register('image', { required: 'Please enter product image URL.' })}></input>
           <div className={productsClasses.checkBox}>
             <input type='checkbox' id='active' name='active' {...register('active')}></input>
@@ -190,6 +178,7 @@ const Products = () => {
       <button className={productsClasses.createButton} onClick={() => {
         setProductToUpdate(null);
         reset();
+        clearErrors();
         showCreateProductModal();
       }}>Create Product</button>
     </div>

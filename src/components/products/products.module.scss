@@ -44,16 +44,25 @@
     display: block;
     margin-bottom: 10px;
     width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #dcd9d9;
   }
+
 
   input[type="submit"] {
     width: 40%;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color:  $success;
   }
 
   select {
     margin-bottom: 10px;
-    width: 103%;
-    height: 25px;
+    width: 105%;
+    padding: 2%;
+    border-radius: 5px;
+    background-color: #dcd9d9;
   }
 
   .checkBox {
@@ -64,6 +73,7 @@
       display: inline;
       width: 20px !important;
       margin-left: -2%;
+      height: 15px;
     }
   
     label {
@@ -74,8 +84,9 @@
   }
 
   .errorMessage {
-    font-size: 12px;
-    color: red;
+    font-size: 13px;
+    color: rgb(172, 20, 20);
+    font-weight: 900;
     align-self: flex-start;
   }
 }

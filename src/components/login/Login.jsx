@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import loginClasses from './login.module.scss';
 import {useHistory} from 'react-router-dom'
@@ -13,6 +13,8 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
+
+  const passwordRef = useRef(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,6 +38,8 @@ const Login = () => {
         text: 'Incorrect mail or password!',
         type: ERROR,
       }));
+      setPassword('');
+      passwordRef.current.focus();
     }
   }
 
@@ -45,11 +49,14 @@ const Login = () => {
       <form onSubmit={handleFormSubmit}>
         <input className={loginClasses.loginInput}
           type='email' placeholder='Email'
-          onChange={e => setEmail(e.target.value)}>
+          onChange={e => setEmail(e.target.value)}
+          value={email}>
         </input>
         <input className={loginClasses.loginInput}
           type='password' placeholder='Password'
-          onChange={e => setPassword(e.target.value)}>
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+          ref={passwordRef}>
         </input>
         <input className={loginClasses.submitButton} type='submit' value='Login'></input>
       </form>
