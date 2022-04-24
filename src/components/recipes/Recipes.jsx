@@ -5,7 +5,7 @@ import {
   getRecipesAsync, softDeleteRecipeAsync, updateRecipeAsync,
 } from '../../redux/reducers/recipesSlice';
 import { openSnackbar } from '../../redux/reducers/commonSlice';
-import { SUCCESS } from '../../common/config/config';
+import { ERROR, SUCCESS } from '../../common/config/config';
 import recipesClasses from './recipes.module.scss';
 import classNames from 'classnames/bind';
 import Table from '../table/Table';
@@ -13,6 +13,18 @@ import { useForm } from 'react-hook-form';
 import Modal from 'react-modal/lib/components/Modal';
 import { updateProductAsync } from '../../redux/reducers/productsSlice';
 import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
+import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
+
+const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the recipe?';
+const initialConfirmDialogState = {
+  isOpen: false,
+  title: null,
+  confirmText: null,
+  cancelText: null,
+  confirmAction: null,
+  cancelAction: null,
+  type: null,
+}
 
 const customStyles = {
   content: {
@@ -36,6 +48,7 @@ const Recipes = () => {
 
   const [recipeToUpdate, setRecipeToUpdate] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
+  const [confirmDialogConfig, setConfirmDialogConfig] = useState(initialConfirmDialogState);
 
   useEffect(() => {
     const sampleRecipe = '-N07b1ZAnPJVFDZMmcpF';
@@ -71,6 +84,20 @@ const Recipes = () => {
 
   const deleteRecipe = (recipeId) => {
     dispatch(softDeleteRecipeAsync(recipeId));
+  }
+
+  const closeDialog = () => {
+    setConfirmDialogConfig(initialConfirmDialogState);
+  }
+
+  const handleDeleteRecipeClick = (recipeId) => {
+    setConfirmDialogConfig({
+      isOpen: true,
+      title: CONFIRM_DELETE_TITLE,
+      type: ERROR,
+      confirmAction: () => { deleteRecipe(recipeId); closeDialog(); },
+      cancelAction: closeDialog,
+    });
   }
 
   const handleFormSubmit = (data) => {
@@ -122,13 +149,14 @@ const Recipes = () => {
           <input type='submit' value={recipeToUpdate ? 'Update' : 'Create'}></input>
         </form>
       </Modal>
+      <ConfirmationDialog {...confirmDialogConfig} />
         <Table data={recipes} headers={{
           id: 'ID',
           rawMaterialId: 'Raw Material ID',
           name: 'Name',
           quantity: 'Quantity',
           unit: 'Unit'
-        }} handleUpdate={updateRecipe} handleDelete={deleteRecipe}/>
+        }} handleUpdate={updateRecipe} handleDelete={handleDeleteRecipeClick}/>
       
       <button className={recipesClasses.createButton} onClick={() => {
           setRecipeToUpdate(null);
