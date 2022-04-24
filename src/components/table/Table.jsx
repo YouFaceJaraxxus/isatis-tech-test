@@ -43,9 +43,15 @@ const Table = (props) => {
           )
         })}
         <td>
-          <button className={tableClasses.buttonEdit} onClick={() => props.handleUpdate(data)}>Update</button></td>
+          <button className={cx({
+            crudButton: true,
+            buttonEdit: true
+          })} onClick={() => props.handleUpdate(data)}>Update</button></td>
         <td>
-          <button className={tableClasses.buttonDelete} onClick={() => props.handleDelete(data.id)}>Delete</button>
+          <button className={cx({
+            crudButton: true,
+            buttonDelete: true
+          })} onClick={() => props.handleDelete(data.id)}>Delete</button>
         </td>
       </tr>
     })
@@ -56,8 +62,8 @@ const Table = (props) => {
     <table className={tableClasses.table}>
       <thead>
         <tr>{tableHeader()}
-          <th>Edit</th>
-          <th>Delete</th>
+          <th className={tableClasses.tableCellButton}></th>
+          <th className={tableClasses.tableCellButton}></th>
         </tr>
       </thead>
       <tbody>{tableRows()}</tbody>

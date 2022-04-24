@@ -1,7 +1,10 @@
+@import '../../common/styles/globalStyles.module.scss';
+
 $table-cell-large: 200px;
 $table-cell-medium: 150px;
 $table-cell-small: 100px;
 $table-cell-xSmall: 50px;
+$table-cell-button: 70px;
 
 .largeCell{
   min-width: $table-cell-large;
@@ -19,9 +22,15 @@ $table-cell-xSmall: 50px;
   min-width: $table-cell-xSmall;
 }
 
+.tableCellButton{
+  min-width: $table-cell-button;
+}
+
 table td{
   border-bottom: 1px solid;
   padding: 10px 0;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 table th{
@@ -39,21 +48,22 @@ table th{
   white-space: nowrap;
 }
 
-.buttonEdit {
-  height: 25px;
+.crudButton{
+  @include white-text;
+  padding: 7px;
   border-radius: 5px;
-  background-color: rgba($color: #7a7cf0, $alpha: 1.0);
+  cursor: pointer;
+  border: none;
 
   &:hover {
-    background-color: rgba($color: #6062d5, $alpha: 1.0);
+    opacity: 0.8;
   }
 }
 
+.buttonEdit {
+  background-color: #2680ca;
+}
+
 .buttonDelete {
-  height: 25px;
-  border-radius: 5px;
-  background-color: rgba($color: #ed6040, $alpha: 1.0);
-  &:hover {
-    background-color: rgba($color: #ca4426, $alpha: 1.0);
-  }
+  @include background-error;
 }

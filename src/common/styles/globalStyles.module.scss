@@ -24,6 +24,10 @@
   background-color: $white;
 }
 
+@mixin background-error {
+  background-color: $error;
+}
+
 @mixin background-error-lighter {
   background-color: $error-lighter;
 }
