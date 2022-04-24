@@ -28,6 +28,10 @@
   background-color: $error-lighter;
 }
 
+@mixin background-success {
+  background-color: $success;
+}
+
 @mixin background-success-lighter {
   background-color: $success-lighter;
 }

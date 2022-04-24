@@ -115,6 +115,12 @@ const Recipes = () => {
     closeCreateRecipeModal();
   }
 
+  const handleCreateRecipeClick = () => {
+    setRecipeToUpdate(null);
+    reset();
+    showCreateRecipeModal();
+  }
+
   return (
     <div className={cx({
       recipesWrapper: true
@@ -164,11 +170,7 @@ const Recipes = () => {
         sizes={['lg', 'lg', 'lg', 'md', 'xs']}
       />
 
-      <button className={recipesClasses.createButton} onClick={() => {
-        setRecipeToUpdate(null);
-        reset();
-        showCreateRecipeModal();
-      }}>Create Recipe</button>
+      <button className={recipesClasses.createButton} onClick={handleCreateRecipeClick}>Create Recipe</button>
     </div>
   )
 }
