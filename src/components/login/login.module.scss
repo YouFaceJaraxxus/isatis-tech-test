@@ -1,3 +1,6 @@
+@import '../../common/styles/globalStyles.module.scss';
+
+
 html, body {
   margin: 0;
   height: 100%;
@@ -10,26 +13,38 @@ html, body {
   flex-direction: column;
   margin: 10% auto auto auto;
   height: 100%;
+  text-align: center;
 
   h3 {
-    width: 20vw;
+    width: 30%;
+    align-self: center;
+
+    @include tablet-small{
+      width: 60%;
+    }
   }
 
   form {
     text-align: center;
+    align-items: center;
+    width: 30%;
+
+    @include tablet-small{
+      width: 60%;
+    }
   }
 }
 
 .loginInput {
   display: flex;
-  width: 25vw;
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
 
 .submitButton {
-  width: 15vw;
+  width: 80%;
   justify-content: center;
   padding: 10px;
   border-radius: 10px;
