@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import Modal from 'react-modal/lib/components/Modal';
 import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
 import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
+import modalStyles from '../../common/modalStyles';
 
 const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the recipe?';
 const initialConfirmDialogState = {
@@ -25,25 +26,13 @@ const initialConfirmDialogState = {
   type: null,
 }
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: '10px solid'
-  },
-};
-
 
 const Recipes = () => {
   const { recipes } = useSelector((state) => state.recipes);
   const { rawMaterials } = useSelector((state) => state.rawMaterials);
   const cx = classNames.bind(recipesClasses);
 
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
 
   const [recipeToUpdate, setRecipeToUpdate] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -131,21 +120,26 @@ const Recipes = () => {
       <Modal
         isOpen={isOpenModal}
         onRequestClose={closeCreateRecipeModal}
-        style={customStyles}
+        style={modalStyles}
+        className={recipesClasses.modalWindow}
       >
-        {!recipeToUpdate && <h4>Create Product</h4>}
-        {recipeToUpdate && <h4>Update Product</h4>}
+        {!recipeToUpdate && <h4>Create Recipe</h4>}
+        {recipeToUpdate && <h4>Update Recipe</h4>}
         <form className={recipesClasses.createRecipeForm} onSubmit={handleSubmit(handleFormSubmit)}>
-          <input type='text' placeholder='Name' name='name' {...register('name')} ></input>
-          <input type='text' placeholder='Quantity' name='quantity' {...register('quantity')} ></input>
-          <select name='rawMaterialId' {...register('rawMaterialId')}>
+          {errors.name && <label className={recipesClasses.errorMessage}>{errors.name.message}</label>}
+          <input type='text' placeholder='Name' name='name' {...register('name', {required: 'Please enter recipe name.'})} ></input>
+          {errors.quantity && <label className={recipesClasses.errorMessage}>{errors.quantity.message}</label>}
+          <input type='text' placeholder='Quantity' name='quantity' {...register('quantity', {required: 'Please enter quantity.'})} ></input>
+          {errors.rawMaterialId && <label className={recipesClasses.errorMessage}>{errors.rawMaterialId.message}</label>}
+          <select name='rawMaterialId' {...register('rawMaterialId', {required: 'Please select raw material.'})}>
             {
               rawMaterials?.map((rawMaterial) => (
                 <option value={rawMaterial.id} key={rawMaterial.id}>{rawMaterial.name}</option>
               ))
             }
           </select>
-          <select name='unit' {...register('unit')}>
+          {errors.unit && <label className={recipesClasses.errorMessage}>{errors.unit.message}</label>}
+          <select name='unit' {...register('unit', {required: 'Please enter unit.'})}>
             <option>g</option>
             <option>kg</option>
             <option>mg</option>

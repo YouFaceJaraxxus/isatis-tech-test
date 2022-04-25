@@ -28,6 +28,7 @@
     word-break: break-word;
     text-align: center;
     margin-bottom: 15px;
+    color: black !important;
   }
 
   .buttons {
@@ -69,6 +70,7 @@
   .cancelButton {
     @include background-white;
     margin-left: 20px;
+    color: black !important;
   }
 
 }

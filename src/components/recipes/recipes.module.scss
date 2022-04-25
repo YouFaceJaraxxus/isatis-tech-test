@@ -33,15 +33,22 @@
 }
 
 .createRecipeForm {
-  display: block;
+  @include modalForm;
 
   input {
-    display: block;
-    margin-bottom: 10px;
+    @include modalInput;
+  }
+
+
+  input[type="submit"] {
+    @include modalSubmit;
   }
 
   select {
-    margin-bottom: 10px;
-    width: 100%;
+    @include modalSelect;
+  }
+
+  .errorMessage {
+    @include modalErrorMessage;
   }
 }

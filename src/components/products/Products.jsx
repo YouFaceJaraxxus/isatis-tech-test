@@ -8,6 +8,9 @@ import Modal from 'react-modal/lib/components/Modal';
 import { createProductAsync, getProductsAsync, softDeleteProductAsync, updateProductAsync } from '../../redux/reducers/productsSlice';
 import { useForm } from 'react-hook-form';
 import ConfirmationDialog from '../confirmationDialog/ConfirmationDialog';
+import { getRecipesAsync } from '../../redux/reducers/recipesSlice';
+import { getRawMaterialsAsync } from '../../redux/reducers/rawMaterialsSlice';
+import modalStyles from '../../common/modalStyles';
 
 const CONFIRM_DELETE_TITLE = 'Are you sure you want to delete the product?';
 const initialConfirmDialogState = {
@@ -20,22 +23,12 @@ const initialConfirmDialogState = {
   type: null,
 }
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: '10px solid'
-  },
-};
-
 const Products = () => {
   const { products } = useSelector((state) => state.products);
+  const { recipes } = useSelector((state) => state.recipes);
+  const { rawMaterials } = useSelector((state) => state.rawMaterials);
 
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors  } = useForm();
 
   const [isOpenModal, setOpenModal] = useState(false);
 
@@ -55,7 +48,9 @@ const Products = () => {
             type: SUCCESS,
           }))
         }
-      })
+      });
+      dispatch(getRecipesAsync());
+      dispatch(getRawMaterialsAsync());
   }, []);
 
   const showCreateProductModal = () => {
@@ -63,6 +58,7 @@ const Products = () => {
   }
 
   const closeCreateProductModal = () => {
+    clearErrors();
     setOpenModal(false);
   }
 
@@ -91,18 +87,37 @@ const Products = () => {
   }
 
   const handleFormSubmit = (data) => {
+    console.log(data);
+
+    if (data.price === '' && data.margin === '') {
+      setError('priceMargin', { type: {
+          required: "Please enter price or margin."
+        }
+      });
+      return;
+    }
+    clearErrors();
+
+    const recipe = recipes.find( r => r.id === data.recipeId);
+    const rawMaterial = rawMaterials.find(rm => rm.id === recipe.rawMaterialId);
+    console.log(recipe);
+    console.log(rawMaterial);
+    if(data.price === '') {
+      data.price = (rawMaterial.price * recipe.quantity) + ((rawMaterial.price * recipe.quantity * data.margin) / 100)
+    } else {
+      data.margin = ((data.price - rawMaterial.price * recipe.quantity) * 100) / (rawMaterial.price * recipe.quantity);
+    }
+
     if (productToUpdate) {
       dispatch(updateProductAsync({
         id: productToUpdate.id,
         body: {
-          ...data,
-          active: data.active === 'yes' ? true : false,
+          ...data
         }
       }));
     } else {
       dispatch(createProductAsync({
-        ...data,
-        active: data.active === 'yes' ? true : false,
+        ...data
       }));
     }
     setProductToUpdate(null);
@@ -117,17 +132,30 @@ const Products = () => {
       <Modal
         isOpen={isOpenModal}
         onRequestClose={closeCreateProductModal}
-        style={customStyles}
+        style={modalStyles}
       >
         {!productToUpdate && <h4>Create Product</h4>}
         {productToUpdate && <h4>Update Product</h4>}
         <form className={productsClasses.createProductForm} onSubmit={handleSubmit(handleFormSubmit)}>
-          <input type='text' placeholder='Name' name='name' {...register('name')} ></input>
-          <input type='text' placeholder='Price' name='price' {...register('price')}></input>
-          <input type='text' placeholder='Margin' name='margin' {...register('margin')}></input>
-          <input type='text' placeholder='Recipe ID' name='recipeId' {...register('recipeId')}></input>
-          <input type='text' placeholder='Active' name='active' {...register('active')}></input>
-          <input type='text' placeholder='Image URL' name='image' {...register('image')}></input>
+          {errors.name && <label className={productsClasses.errorMessage}>{errors.name.message}</label>}
+          <input type='text' placeholder='Name' name='name' {...register('name', { required: 'Please enter product name.' })} ></input>
+          {errors.priceMargin && <label className={productsClasses.errorMessage}>{errors.priceMargin.message}</label>}
+          <input type='number' step='.01' placeholder='Price' name='price' {...register('price')}></input>
+          <input type='number' step='.01' placeholder='Margin' name='margin' {...register('margin')}></input>
+          {errors.recipeId && <label className={productsClasses.errorMessage}>{errors.recipeId.message}</label>}
+          <select name='recipeId' {...register('recipeId', { required: 'Please select recipe.' })}>
+            {
+              recipes?.map((recipe) => !recipe.isDeleted && (
+                <option value={recipe.id} key={recipe.id}>{recipe.name}</option>
+              ))  
+            }
+          </select>
+          {errors.image && <label className={productsClasses.errorMessage}>{errors.image.message}</label>}
+          <input type='text' placeholder='Image URL' name='image' {...register('image', { required: 'Please enter product image URL.' })}></input>
+          <div className={productsClasses.checkBox}>
+            <input type='checkbox' id='active' name='active' {...register('active')}></input>
+            <label htmlFor='active'>Active</label>
+          </div>
           <input type='submit' value={productToUpdate ? 'Update' : 'Create'}></input>
         </form>
       </Modal>
@@ -150,6 +178,7 @@ const Products = () => {
       <button className={productsClasses.createButton} onClick={() => {
         setProductToUpdate(null);
         reset();
+        clearErrors();
         showCreateProductModal();
       }}>Create Product</button>
     </div>

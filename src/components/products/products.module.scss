@@ -34,15 +34,40 @@
 
 
 .createProductForm {
-  display: block;
+  @include modalForm;
 
   input {
-    display: block;
-    margin-bottom: 10px;
+    @include modalInput;
+  }
+
+
+  input[type="submit"] {
+    @include modalSubmit;
   }
 
   select {
-    margin-bottom: 10px;
+    @include modalSelect;
+  }
+
+  .checkBox {
+    display: block;
     width: 100%;
+  
+    input {
+      display: inline;
+      width: 20px !important;
+      margin-left: -2%;
+      height: 15px;
+    }
+  
+    label {
+      display: inline;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  }
+
+  .errorMessage {
+    @include modalErrorMessage;
   }
 }

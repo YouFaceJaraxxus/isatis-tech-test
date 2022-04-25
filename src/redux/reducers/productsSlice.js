@@ -53,6 +53,13 @@ const getArrayFromObject = (productObject) => Object.entries(productObject)
     }
   });
 
+  const sortArrayByName = (array) => array.sort((a, b) => {
+    const aName = a.name.toLowerCase();
+    const bName = b.name.toLowerCase();
+    return (aName<bName?-1:(aName>bName?1:0));
+  })
+
+
 export const productsSlice = createSlice({
   name: 'products',
   initialState: {
@@ -75,7 +82,7 @@ export const productsSlice = createSlice({
     })
       .addCase(getProductsAsync.fulfilled, (state, action) => {
         //we can't get arrays from firebase, only objects, which we can turn into arrays and manipulate as arrays
-        state.products = getArrayFromObject(action.payload).filter((product) => product.active);
+        state.products = sortArrayByName(getArrayFromObject(action.payload).filter((product) => !product.isDeleted));
         state.fetchingproducts = false;
       })
       .addCase(getProductsAsync.rejected, (state) => {
@@ -95,10 +102,11 @@ export const productsSlice = createSlice({
         state.creatingProduct = true;
       })
       .addCase(createProductAsync.fulfilled, (state, action) => {
-        state.products = [...state.products, {
+        state.products = sortArrayByName([...state.products, {
           id: action.payload.name,
+          rawMaterialId: action.payload.name,
           ...action.meta.arg,
-        }]
+        }]);
         state.creatingProduct = false;
       })
       .addCase(createProductAsync.rejected, (state) => {
@@ -108,16 +116,16 @@ export const productsSlice = createSlice({
         state.updatingProduct = true;
       })
       .addCase(updateProductAsync.fulfilled, (state, action) => {
-        state.products = state.products.map((product) => {
+        state.products = sortArrayByName(state.products.map((product) => {
           if(product.id === action.meta.arg.id){
-            //spread old product and overwrite data with new updated product's spread data
+            //spread old recipe and overwrite data with new updated recipe's spread data
             return {
               ...product,
               ...action.payload
             };
           }
           else return product;
-        })
+        }));
         state.updatingProduct = false;
       })
       .addCase(updateProductAsync.rejected, (state) => {
